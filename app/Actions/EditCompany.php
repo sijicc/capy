@@ -10,7 +10,6 @@ class EditCompany
 {
     public function handle(Company $company, array|CompanyData $changes): Company
     {
-//        $changes = CompanyData::validate($changes);
         $rules = CompanyData::getValidationRules($changes);
         $rules['nip'][2] .= ',' . $company->id;
         $rules['regon'][2] .= ',' . $company->id;

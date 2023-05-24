@@ -90,6 +90,48 @@
                 <x-forms.input name="street" type="text" wire:model.defer="company.address.street"/>
             </div>
 
+            <div class="border-t border-gray-200"></div>
+            <div class="my-6">
+                <h3 class="text-lg leading-6 font-medium text-gray-900">
+                    {{ __('Correspondence address') }}
+                </h3>
+                <div class="mt-1 max-w-2xl text-sm text-gray-500">
+                    <p>
+                        {{ __('Here you can add correspondence address for this company.') }}
+                    </p>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <x-forms.label for="country_id" :value="__('Country')"/>
+                <x-forms.select name="country_id" type="text" wire:model.defer="company.correspondenceAddress.country_id"
+                                :options="$this->countries()"/>
+            </div>
+
+            <div class="mb-6">
+                <x-forms.label for="administrative_area" :value="__('Administrative area')"/>
+                <x-forms.info>
+                    {{ __('For example: voivodeship, state, province, etc.') }}
+                </x-forms.info>
+                <x-forms.input name="administrative_area" type="text"
+                               wire:model.defer="company.correspondenceAddress.administrative_area"/>
+            </div>
+
+            <div class="mb-6">
+                <x-forms.label for="city" :value="__('City')"/>
+                <x-forms.input name="city" type="text" wire:model.defer="company.correspondenceAddress.city"/>
+            </div>
+
+            <div class="mb-6">
+                <x-forms.label for="zip" :value="__('Postal code')"/>
+                <x-forms.input name="zip" type="text" wire:model.defer="company.correspondenceAddress.zip"/>
+            </div>
+
+            <div class="mb-6">
+                <x-forms.label for="street" :value="__('Street')"/>
+                <x-forms.input name="street" type="text" wire:model.defer="company.correspondenceAddress.street"/>
+            </div>
+
         </div>
 
         <div>
