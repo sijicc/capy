@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@tailwind forms;
+
+[x-cloak] {
+    display: none;
+}
+
+/* add red * after label having required class */
+label.required:after {
+    content: "*";
+    color: red;
+}
