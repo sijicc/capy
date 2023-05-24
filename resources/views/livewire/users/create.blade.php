@@ -19,33 +19,35 @@
         <div>
             <div class="my-6">
                 <h3 class="text-lg leading-6 font-medium text-gray-900">
-                    {{ __('Company') }}
+                    {{ __('User') }}
                 </h3>
                 <div class="mt-1 max-w-2xl text-sm text-gray-500">
                     <p>
-                        {{ __('Here you can add company details.') }}
+                        {{ __('Here you can add user details.') }}
                     </p>
                 </div>
             </div>
 
             <div class="mb-6">
                 <x-forms.label for="name" class="required" :value="__('Name')"/>
-                <x-forms.input name="name" type="text" wire:model.defer="company.name" required/>
+                <x-forms.input name="name" type="text" wire:model.defer="user.name" required/>
             </div>
 
             <div class="mb-6">
-                <x-forms.label for="nip" class="required" :value="__('NIP')"/>
-                <x-forms.input name="nip" type="text" wire:model.defer="company.nip" required/>
+                <x-forms.label for="email" class="required" :value="__('Email address')"/>
+                <x-forms.input name="email" type="email" wire:model.defer="user.email" required/>
             </div>
 
             <div class="mb-6">
-                <x-forms.label for="regon" class="required" :value="__('REGON')"/>
-                <x-forms.input name="regon" type="text" wire:model.defer="company.regon" required/>
-            </div>
+                <x-forms.label for="password" class="required" :value="__('Password')"/>
+                <div class="relative">
+                    <x-forms.input name="password" type="password" wire:model.defer="user.password" required/>
+                    @svg('heroicon-m-eye', 'h-6 w-6 absolute right-0 top-0 mt-2 mr-2 cursor-pointer text-gray-400', ['x-on:click' => 'document.getElementById("password").type = document.getElementById("password").type === "password" ? "text" : "password"'])
+                </div>
 
-            <div class="mb-6">
-                <x-forms.label for="krs" :value="__('KRS')"/>
-                <x-forms.input name="krs" type="text" wire:model.defer="company.krs"/>
+                <x-button type="button" class="mt-2" wire:click="generateSafePassword">
+                    {{ __('Generate safe password') }}
+                </x-button>
             </div>
         </div>
 
