@@ -11,8 +11,7 @@ class UserData extends Data
         public string $name,
         public string $email,
         public string $password,
-    )
-    {
+    ) {
     }
 
     public static function rules(): array
@@ -24,7 +23,7 @@ class UserData extends Data
                 ->length(8)
                 ->requireUppercase()
                 ->requireNumeric()
-                ->requireSpecialCharacter()
+                ->requireSpecialCharacter(),
             ],
         ];
     }

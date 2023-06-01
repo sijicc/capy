@@ -15,5 +15,4 @@ class EditAddress
 
         return $address;
     }
-
 }

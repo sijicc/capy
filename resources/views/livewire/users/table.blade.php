@@ -14,11 +14,11 @@
                 <td>{{ $user->created_at->format('d.m.Y H:i:s') }}</td>
                 <td>{{ $user->updated_at->format('d.m.Y H:i:s') }}</td>
                 <td class="flex justify-end">
-                    <x-button type="link" :href="route('users.edit', $user)"
+                    <x-button color="link" :href="route('users.edit', $user)"
                               class="text-indigo-600 hover:text-indigo-900">
                         {{ __('Edit') }}
                     </x-button>
-                    <x-button type="link" wire:click="confirmDelete({{ $user->id }})"
+                    <x-button color="link" wire:click="confirmDelete({{ $user->id }})"
                               class="text-red-600 hover:text-red-900">
                         {{ __('Delete') }}
                     </x-button>

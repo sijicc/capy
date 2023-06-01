@@ -11,7 +11,7 @@ class CreateAddress
     {
         AddressData::validate($address);
 
-        if (!($address instanceof AddressData)) {
+        if (! ($address instanceof AddressData)) {
             $address = AddressData::from($address ?? []);
         }
 

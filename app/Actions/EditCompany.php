@@ -11,12 +11,12 @@ class EditCompany
     public function handle(Company $company, array|CompanyData $changes): Company
     {
         $rules = CompanyData::getValidationRules($changes);
-        $rules['nip'][2] .= ',' . $company->id;
-        $rules['regon'][2] .= ',' . $company->id;
+        $rules['nip'][2] .= ','.$company->id;
+        $rules['regon'][2] .= ','.$company->id;
 
         $changes = Validator::make($changes, $rules)->validated();
 
-        if (!($changes instanceof CompanyData)) {
+        if (! ($changes instanceof CompanyData)) {
             $changes = CompanyData::from($changes);
         }
 
@@ -28,5 +28,4 @@ class EditCompany
 
         return $company;
     }
-
 }

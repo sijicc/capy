@@ -13,7 +13,7 @@ class CreateCompany
 
         $createAddress = new CreateAddress();
 
-        if(!($company instanceof CompanyData)) {
+        if (! ($company instanceof CompanyData)) {
             $company = CompanyData::from($company);
         }
 

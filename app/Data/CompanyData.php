@@ -9,15 +9,14 @@ use Spatie\LaravelData\Data;
 class CompanyData extends Data
 {
     public function __construct(
-        public string      $name,
-        public string      $nip,
-        public string      $regon,
-        public ?string     $krs,
+        public string $name,
+        public string $nip,
+        public string $regon,
+        public ?string $krs,
         public AddressData $address,
         public AddressData $correspondenceAddress,
-        public ?string     $website = null,
-    )
-    {
+        public ?string $website = null,
+    ) {
     }
 
     public static function rules(): array

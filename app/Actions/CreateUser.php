@@ -7,13 +7,9 @@ use App\Models\User;
 
 class CreateUser
 {
-    public function handle(array|UserData $user): User
+    public function handle(array $user): User
     {
-        UserData::validate($user);
-
-        if(!($user instanceof UserData)) {
-            $user = UserData::from($user);
-        }
+        $user = UserData::validateAndCreate($user);
 
         return User::create($user->toArray());
     }

@@ -4,7 +4,12 @@ namespace App\Http\Livewire\Users;
 
 use App\Actions\CreateUser;
 use App\Data\UserData;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Livewire\Component;
+use Livewire\Redirector;
 use Str;
 
 class Create extends Component
@@ -16,7 +21,7 @@ class Create extends Component
         $this->user = UserData::empty();
     }
 
-    public function store(CreateUser $createUser)
+    public function store(CreateUser $createUser): RedirectResponse|Redirector
     {
         $createUser->handle($this->user);
 
@@ -28,7 +33,7 @@ class Create extends Component
         $this->user['password'] = Str::password(32);
     }
 
-    public function render()
+    public function render(): View|\Illuminate\Foundation\Application|Factory|Application
     {
         return view('livewire.users.create');
     }

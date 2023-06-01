@@ -104,7 +104,8 @@
 
             <div class="mb-6">
                 <x-forms.label for="country_id" :value="__('Country')"/>
-                <x-forms.select name="country_id" type="text" wire:model.defer="company.correspondenceAddress.country_id"
+                <x-forms.select name="country_id" type="text"
+                                wire:model.defer="company.correspondenceAddress.country_id"
                                 :options="$this->countries()"/>
             </div>
 
@@ -135,10 +136,10 @@
         </div>
 
         <div>
-            <x-button type="danger" :href="route('companies.index')" class="mr-3">
+            <x-button color="danger" :href="route('companies.index')" class="mr-3">
                 {{ __('Cancel') }}
             </x-button>
-            <x-button type="submit">
+            <x-button color="submit">
                 {{ __('Save changes') }}
             </x-button>
         </div>

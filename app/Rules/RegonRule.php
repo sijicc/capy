@@ -9,7 +9,6 @@ use Illuminate\Contracts\Validation\ValidationRule;
 #[Attribute(Attribute::TARGET_PROPERTY)]
 class RegonRule implements ValidationRule
 {
-
     public function getRules(): array
     {
         return [$this];
@@ -18,7 +17,7 @@ class RegonRule implements ValidationRule
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
         try {
-            if (!preg_match('/^[0-9]{9,14}$/', $value)) {
+            if (! preg_match('/^[0-9]{9,14}$/', $value)) {
                 $fail('REGON must be 9 or 14 digits long.');
             }
 
@@ -58,7 +57,7 @@ class RegonRule implements ValidationRule
                 $controlNumber = 0;
             }
 
-            if ($controlNumber !== (int)$value[strlen($value) - 1]) {
+            if ($controlNumber !== (int) $value[strlen($value) - 1]) {
                 $fail('REGON is invalid.');
             }
         } catch (\Throwable $e) {

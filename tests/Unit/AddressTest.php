@@ -49,6 +49,6 @@ it('doesn\'t allow user to create address with invalid country', function () {
         'street' => 'ul. Testowa 1',
     ];
 
-    $this->expect(fn() => (new CreateAddress())->handle($address))->toThrow(ValidationException::class);
+    $this->expect(fn () => (new CreateAddress())->handle($address))->toThrow(ValidationException::class);
     $this->assertDatabaseMissing('addresses', $address);
 });

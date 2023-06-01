@@ -17,8 +17,8 @@ class NipRule implements ValidationRule
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
         try {
-            $value = (string)$value;
-            if (!preg_match('/^[0-9]{10}$/', $value)) {
+            $value = (string) $value;
+            if (! preg_match('/^[0-9]{10}$/', $value)) {
                 $fail('NIP must be 10 digits long.');
             }
 
@@ -51,10 +51,9 @@ class NipRule implements ValidationRule
                 $controlNumber = 0;
             }
 
-            if ($controlNumber !== (int)$value[9]) {
+            if ($controlNumber !== (int) $value[9]) {
                 $fail('NIP is invalid.');
             }
-
         } catch (\Throwable $e) {
             $fail('NIP is invalid.');
         }

@@ -52,10 +52,10 @@
         </div>
 
         <div>
-            <x-button type="danger" :href="route('users.index')" class="mr-3">
+            <x-button color="danger" :href="route('users.index')" class="mr-3">
                 {{ __('Cancel') }}
             </x-button>
-            <x-button type="submit">
+            <x-button color="submit">
                 {{ __('Create') }}
             </x-button>
         </div>

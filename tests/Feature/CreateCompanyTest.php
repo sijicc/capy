@@ -4,7 +4,8 @@ use App\Data\CompanyData;
 use App\Http\Livewire\Companies\Create;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use function Pest\Laravel\{get, actingAs};
+use function Pest\Laravel\actingAs;
+use function Pest\Laravel\get;
 use function Pest\Livewire\livewire;
 
 uses(RefreshDatabase::class);
