@@ -2,14 +2,16 @@
 
 namespace App\Enums;
 
-enum InvoiceStatus
+use Illuminate\Support\Collection;
+
+enum InvoiceStatus: string
 {
-    case DRAFT;
-    case CONFIRMED;
-    case SENT;
-    case PAID;
-    case OVERDUE;
-    case CANCELLED;
+    case DRAFT = 'draft';
+    case CONFIRMED = 'confirmed';
+    case SENT = 'sent';
+    case PAID = 'paid';
+    case OVERDUE = 'overdue';
+    case CANCELLED = 'cancelled';
 
     public function label(): string
     {
@@ -21,5 +23,10 @@ enum InvoiceStatus
             self::OVERDUE => __('Overdue'),
             self::CANCELLED => __('Cancelled'),
         };
+    }
+
+    public static function asCollection(): Collection
+    {
+        return collect(self::cases())->mapWithKeys(fn(self $status) => [$status->value => $status->label()]);
     }
 }

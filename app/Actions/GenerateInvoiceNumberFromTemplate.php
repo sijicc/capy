@@ -2,6 +2,7 @@
 
 namespace App\Actions;
 
+use App\Enums\InvoiceType;
 use App\Models\InvoiceNumberTemplate;
 use Carbon\Carbon;
 
@@ -9,7 +10,7 @@ class GenerateInvoiceNumberFromTemplate
 {
     public function handle(
         InvoiceNumberTemplate $invoiceNumberTemplate,
-        string $type,
+        InvoiceType $type,
         int $padLength = 4,
         Carbon $date = null
     ): string {
@@ -19,6 +20,8 @@ class GenerateInvoiceNumberFromTemplate
             $date = now();
         }
 
+        $next = $invoiceNumberTemplate->getNextNumberAttribute($date);
+
         $invoiceNumber = str_replace(InvoiceNumberTemplate::CURRENT_YEAR, $date->format('Y'), $invoiceNumber);
         $invoiceNumber = str_replace(InvoiceNumberTemplate::CURRENT_MONTH, $date->format('m'), $invoiceNumber);
         $invoiceNumber = str_replace(InvoiceNumberTemplate::CURRENT_DAY, $date->format('d'), $invoiceNumber);
@@ -26,13 +29,13 @@ class GenerateInvoiceNumberFromTemplate
 
         $invoiceNumber = str_replace(
             search: InvoiceNumberTemplate::NEXT_NUMBER,
-            replace: $invoiceNumberTemplate->next_number,
+            replace: $next,
             subject: $invoiceNumber
         );
         $invoiceNumber = str_replace(
             search: InvoiceNumberTemplate::NEXT_NUMBER_WITH_LEADING_ZEROS,
             replace: str_pad(
-                string: $invoiceNumberTemplate->next_number,
+                string: $next,
                 length: $padLength,
                 pad_string: '0',
                 pad_type: STR_PAD_LEFT
@@ -41,7 +44,7 @@ class GenerateInvoiceNumberFromTemplate
         );
         $invoiceNumber = str_replace(
             search: InvoiceNumberTemplate::INVOICE_TYPE,
-            replace: $type,
+            replace: $type->label(),
             subject: $invoiceNumber
         );
 

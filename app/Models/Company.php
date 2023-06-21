@@ -2,20 +2,15 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Company extends Model
 {
-    protected $fillable = [
-        'name',
-        'nip',
-        'regon',
-        'krs',
-        'website',
-        'address_id',
-        'correspondence_address_id',
-    ];
+    use HasFactory;
+
+    protected $guarded = ['id'];
 
     public function address(): belongsTo
     {

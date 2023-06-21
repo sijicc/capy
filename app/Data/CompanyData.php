@@ -4,10 +4,14 @@ namespace App\Data;
 
 use App\Rules\NipRule;
 use App\Rules\RegonRule;
+use Livewire\Wireable;
+use Spatie\LaravelData\Concerns\WireableData;
 use Spatie\LaravelData\Data;
 
-class CompanyData extends Data
+class CompanyData extends Data implements Wireable
 {
+    use WireableData;
+
     public function __construct(
         public string $name,
         public string $nip,

@@ -1,4 +1,4 @@
-<x-card class="min-h-screen" footer-class="flex justify-end">
+<x-card class="min-h-secreen" footer-class="flex justify-end">
     <x-slot:header>
         <div class="flex justify-between">
             <div>

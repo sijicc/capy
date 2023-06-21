@@ -2,13 +2,15 @@
 
 namespace App\Enums;
 
-enum InvoiceType
+use Illuminate\Support\Collection;
+
+enum InvoiceType: string
 {
-    case INVOICE;
-    case PROFORMA;
-    case CORRECTION;
-    case ADVANCE;
-    case FINAL;
+    case INVOICE = 'invoice';
+    case PROFORMA = 'proforma';
+    case CORRECTION = 'correction';
+    case ADVANCE = 'advance';
+    case FINAL = 'final';
 
     public function label(): string
     {
@@ -19,5 +21,10 @@ enum InvoiceType
             self::ADVANCE => __('Advance invoice'),
             self::FINAL => __('Final invoice'),
         };
+    }
+
+    public static function asCollection(): Collection
+    {
+        return collect(self::cases())->mapWithKeys(fn(self $type) => [$type->value => $type->label()]);
     }
 }

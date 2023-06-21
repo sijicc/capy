@@ -10,7 +10,7 @@
     @stack('head')
     @livewireStyles
 </head>
-<body class="antialiased" x-data="{sidebarOpen: true}">
+<body class="antialiased" x-data="{sidebarOpen: false}">
 <x-sidebar/>
 
 <div :class="sidebarOpen ? 'md:ml-64' : ''" class="pl-6 lg:pl-8 flex items-center">

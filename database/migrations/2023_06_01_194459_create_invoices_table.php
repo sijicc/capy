@@ -19,8 +19,8 @@ return new class extends Migration
 
             $table->string('number')->unique();
             $table->foreignIdFor(InvoiceNumberTemplate::class);
-            $table->string('type')->default(InvoiceType::INVOICE);
-            $table->string('status')->default(InvoiceStatus::DRAFT);
+            $table->string('type')->default(InvoiceType::INVOICE->value);
+            $table->string('status')->default(InvoiceStatus::DRAFT->value);
 
             $table->bigInteger('net_total');
             $table->bigInteger('tax_total');
@@ -47,15 +47,6 @@ return new class extends Migration
             $table->string('customer_phone')->nullable();
 
             $table->nullableMorphs('receiverable');
-            $table->string('receiver_name');
-            $table->string('receiver_address');
-            $table->string('receiver_zip');
-            $table->string('receiver_city');
-            $table->foreignIdFor(Country::class, 'receiver_country_id');
-            $table->string('receiver_nip');
-            $table->string('receiver_email');
-            $table->string('receiver_phone');
-
             $table->string('receiver_name');
             $table->string('receiver_address');
             $table->string('receiver_zip');

@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\InvoiceStatus;
+use App\Enums\InvoiceType;
 use Cknow\Money\Casts\MoneyDecimalCast;
 use Cknow\Money\Tests\Database\Models\User;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -27,6 +29,9 @@ class Invoice extends Model
         'tax_total' => MoneyDecimalCast::class.':currency',
         'gross_total' => MoneyDecimalCast::class.':currency',
         'advance_total' => MoneyDecimalCast::class.':currency',
+
+        'type' => InvoiceType::class,
+        'status' => InvoiceStatus::class,
     ];
 
     public function exchangeRate(): Attribute
