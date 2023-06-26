@@ -19,12 +19,63 @@ use Livewire\Redirector;
 
 class Create extends Component
 {
-    public array $invoice;
+    public array $invoice = [
+        'number' => null,
+        'invoice_number_template_id' => null,
+        'type' => InvoiceType::INVOICE,
+        'status' => InvoiceStatus::DRAFT,
 
-    public function mount(): void
-    {
-        $this->invoice = InvoiceData::empty();
-    }
+        'net_total' => 0,
+        'tax_total' => 0,
+        'gross_total' => 0,
+
+        'currency' => 'PLN',
+        'exchange_rate' => 100,
+
+        'advance_total' => null,
+        'final_id' => null,
+
+        'issue_date' => null,
+        'sale_date' => null,
+        'due_date' => null,
+        'payment_date' => null,
+
+        'customerable_id' => null,
+        'customerable_type' => null,
+        'customer_name' => null,
+        'customer_address' => null,
+        'customer_zip' => null,
+        'customer_city' => null,
+        'customer_country_id' => null,
+        'customer_nip' => null,
+        'customer_email' => null,
+        'customer_phone' => null,
+
+        'receiverable_id' => null,
+        'receiverable_type' => null,
+        'receiver_name' => null,
+        'receiver_address' => null,
+        'receiver_zip' => null,
+        'receiver_city' => null,
+        'receiver_country_id' => null,
+        'receiver_nip' => null,
+        'receiver_email' => null,
+        'receiver_phone' => null,
+
+        'vendorable_id' => null,
+        'vendorable_type' => null,
+        'vendor_name' => null,
+        'vendor_address' => null,
+        'vendor_zip' => null,
+        'vendor_city' => null,
+        'vendor_country_id' => null,
+        'vendor_nip' => null,
+        'vendor_email' => null,
+        'vendor_phone' => null,
+
+        'items' => [],
+        'notes' => null,
+    ];
 
     public function store(CreateInvoice $createInvoice): RedirectResponse|Redirector
     {

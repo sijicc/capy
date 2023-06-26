@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Validation\Rules\Password;
 use Validator;
 
-class EditUser
+readonly class EditUser
 {
     public function handle(User $user, array $changes): User
     {

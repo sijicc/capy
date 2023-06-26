@@ -11,7 +11,7 @@ readonly class EditAddress
     {
         $validated = $this->validate($changes);
 
-        $address->update($this->validate($changes));
+        $address->update($validated);
 
         return $address;
     }

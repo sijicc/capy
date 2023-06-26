@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Validation\Rules\Password;
 use Validator;
 
-class CreateUser
+readonly class CreateUser
 {
     public function handle(array $user): User
     {

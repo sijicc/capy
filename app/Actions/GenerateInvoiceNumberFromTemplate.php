@@ -6,7 +6,7 @@ use App\Enums\InvoiceType;
 use App\Models\InvoiceNumberTemplate;
 use Carbon\Carbon;
 
-class GenerateInvoiceNumberFromTemplate
+readonly class GenerateInvoiceNumberFromTemplate
 {
     public function handle(
         InvoiceNumberTemplate $invoiceNumberTemplate,
