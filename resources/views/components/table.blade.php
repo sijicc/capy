@@ -1,16 +1,16 @@
-<table @class([
-    'w-full table-auto',
-])>
-    <thead @class([
-        'border-b border-gray-200 font-normal text-gray-500 text-left text-sm',
-])>
-    <tr>
-        {{ $head }}
-    </tr>
+<table {{ $attributes->twMerge("w-full text-left text-sm text-gray-500 dark:text-gray-400") }}>
+    <thead
+        @class([
+            "bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400",
+        ])
+    >
+        <tr>
+            {{ $head }}
+        </tr>
     </thead>
     <tbody @class([
-        'bg-white divide-y divide-gray-200',
-])>
-    {{ $body }}
+        "divide-y divide-gray-200 bg-white",
+    ])>
+        {{ $body }}
     </tbody>
 </table>

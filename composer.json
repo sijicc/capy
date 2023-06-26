@@ -12,6 +12,7 @@
         "blade-ui-kit/blade-heroicons": "^2.1",
         "blade-ui-kit/blade-icons": "^1.5",
         "cknow/laravel-money": "^7.1",
+        "gehrisandro/tailwind-merge-laravel": "^0.1.0",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/fortify": "^1.16",
         "laravel/framework": "^10.0",
