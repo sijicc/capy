@@ -2,15 +2,30 @@
 
 namespace App\Actions;
 
-use App\Data\UserData;
 use App\Models\User;
+use Illuminate\Validation\Rules\Password;
+use Validator;
 
 class CreateUser
 {
     public function handle(array $user): User
     {
-        $user = UserData::validateAndCreate($user);
+        $validated = $this->validate($user);
 
-        return User::create($user->toArray());
+        return User::create($validated);
+    }
+
+    protected function validate(array $user): array
+    {
+        return Validator::make($user, [
+            'name' => ['required', 'string', 'max:255'],
+            'password' => [
+                Password::min(8)
+                    ->letters()
+                    ->mixedCase()
+                    ->numbers(),
+            ],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+        ])->validate();
     }
 }

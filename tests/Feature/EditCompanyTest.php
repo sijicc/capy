@@ -24,24 +24,21 @@ it('allows user to edit company with correct data', function () {
 
     $company = Company::factory()->create();
 
-    livewire(Edit::class, ['company' => $company->getAttributes()])
-        ->set('company.name', 'Biedronka')
-        ->set('company.nip', '7791011327')
-        ->set('company.regon', '630303023')
-        ->call('update')
-        ->assertRedirect(route('companies.show', $company));
-
-    $this->assertDatabaseHas('companies', [
+    $changes = [
         'name' => 'Biedronka',
         'nip' => '7791011327',
         'regon' => '630303023',
-    ]);
+    ];
 
-    $this->assertDatabaseMissing('companies', [
-        'name' => $company->name,
-        'nip' => $company->nip,
-        'regon' => $company->regon,
-    ]);
+    livewire(Edit::class, ['company' => $company->getAttributes()])
+        ->set('company.name', $changes['name'])
+        ->set('company.nip', $changes['nip'])
+        ->set('company.regon', $changes['regon'])
+        ->call('update')
+        ->assertRedirect(route('companies.show', $company));
+
+    $this->assertDatabaseHas('companies', $changes);
+    $this->assertDatabaseMissing('companies', $company->getAttributes());
 });
 
 it('doesn\'t allow user to edit company with incorrect data', function () {
@@ -49,22 +46,19 @@ it('doesn\'t allow user to edit company with incorrect data', function () {
 
     $company = Company::factory()->create();
 
-    livewire(Edit::class, ['company' => $company->getAttributes()])
-        ->set('company.name', 'Biedronka')
-        ->set('company.nip', '0000000000')
-        ->set('company.regon', '123456789')
-        ->call('update')
-        ->assertHasErrors(['nip', 'regon']);
-
-    $this->assertDatabaseHas('companies', [
-        'name' => $company->name,
-        'nip' => $company->nip,
-        'regon' => $company->regon,
-    ]);
-
-    $this->assertDatabaseMissing('companies', [
+    $changes = [
         'name' => 'Biedronka',
         'nip' => '0000000000',
         'regon' => '123456789',
-    ]);
+    ];
+
+    livewire(Edit::class, ['company' => $company->getAttributes()])
+        ->set('company.name', $changes['name'])
+        ->set('company.nip', $changes['nip'])
+        ->set('company.regon', $changes['regon'])
+        ->call('update')
+        ->assertHasErrors(['nip', 'regon']);
+
+    $this->assertDatabaseHas('companies', $company->getAttributes());
+    $this->assertDatabaseMissing('companies', $changes);
 });
