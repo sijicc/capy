@@ -4,7 +4,6 @@ namespace App\Http\Livewire\Invoices;
 
 use App\Actions\CreateInvoice;
 use App\Actions\GenerateInvoiceNumberFromTemplate;
-use App\Data\InvoiceData;
 use App\Enums\InvoiceStatus;
 use App\Enums\InvoiceType;
 use App\Models\Company;
