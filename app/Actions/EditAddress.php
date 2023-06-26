@@ -2,16 +2,23 @@
 
 namespace App\Actions;
 
-use App\Data\AddressData;
+use App\Http\Requests\AddresRequest;
 use App\Models\Address;
+use Validator;
 
-class EditAddress
+readonly class EditAddress
 {
-    public function handle(Address $address, array|AddressData|null $changes = []): Address
+    public function __construct(
+        private AddresRequest $addresRequest = new AddresRequest(),
+    )
     {
-        $changes = AddressData::validate($changes);
+    }
 
-        $address->update($changes);
+    public function handle(Address $address, array $changes = []): Address
+    {
+        $validated = Validator::make($changes, $this->addresRequest->rules())->validate();
+
+        $address->update($validated);
 
         return $address;
     }

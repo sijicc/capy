@@ -3,7 +3,6 @@
 namespace App\Http\Livewire\Companies;
 
 use App\Actions\CreateCompany;
-use App\Data\CompanyData;
 use App\Models\Country;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -13,12 +12,28 @@ use Livewire\Component;
 
 class Create extends Component
 {
-    public array $company;
-
-    public function mount(): void
-    {
-        $this->company = CompanyData::empty();
-    }
+    public array $company = [
+        'name' => null,
+        'nip' => null,
+        'regon' => null,
+        'krs' => null,
+        'email' => null,
+        'phone' => null,
+        'address' => [
+            'country_id' => null,
+            'administrative_area' => null,
+            'city' => null,
+            'postal_code' => null,
+            'street' => null,
+        ],
+        'correspondence_address' => [
+            'country_id' => null,
+            'administrative_area' => null,
+            'city' => null,
+            'postal_code' => null,
+            'street' => null,
+        ],
+    ];
 
     public function countries(): Collection
     {
@@ -28,7 +43,6 @@ class Create extends Component
     public function store(CreateCompany $createCompany)
     {
         $createCompany->handle($this->company);
-
         return redirect()->route('companies.index');
     }
 

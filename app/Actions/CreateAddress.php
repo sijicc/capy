@@ -2,19 +2,16 @@
 
 namespace App\Actions;
 
-use App\Data\AddressData;
+use App\Http\Requests\AddresRequest;
 use App\Models\Address;
+use Validator;
 
-class CreateAddress
+readonly class CreateAddress
 {
-    public function handle(array|AddressData|null $address = []): Address
+    public function handle(array $address): Address
     {
-        AddressData::validate($address);
+        $validated = Validator::make($address, (new AddresRequest())->rules())->validate();
 
-        if (! ($address instanceof AddressData)) {
-            $address = AddressData::from($address ?? []);
-        }
-
-        return Address::create($address->toArray());
+        return Address::create($validated);
     }
 }

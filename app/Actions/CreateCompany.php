@@ -2,24 +2,29 @@
 
 namespace App\Actions;
 
-use App\Data\CompanyData;
+use App\Http\Requests\CompanyRequest;
 use App\Models\Company;
+use Validator;
 
-class CreateCompany
+readonly class CreateCompany
 {
-    public function handle(array|CompanyData $company): Company
+    public function __construct(
+        public CreateAddress $createAddress = new CreateAddress(),
+    )
     {
-        CompanyData::validate($company);
+    }
 
-        $createAddress = new CreateAddress();
+    public function handle(array $company): Company
+    {
+        $validated = Validator::make($company, (new CompanyRequest())->rules())->validate();
 
-        if (! ($company instanceof CompanyData)) {
-            $company = CompanyData::from($company);
-        }
+        $validated['address_id'] = $this->createAddress->handle(
+            address: $company['address'] ?? []
+        )->id;
+        $validated['correspondence_address_id'] = $this->createAddress->handle(
+            address: $company['correspondence_address'] ?? []
+        )->id;
 
-        return Company::create(array_merge($company->toArray(), [
-            'address_id' => $createAddress->handle($company->address)->id,
-            'correspondence_address_id' => $createAddress->handle($company->correspondenceAddress)->id,
-        ]));
+        return Company::create($validated);
     }
 }

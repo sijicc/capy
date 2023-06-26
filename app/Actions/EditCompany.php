@@ -2,29 +2,30 @@
 
 namespace App\Actions;
 
-use App\Data\CompanyData;
+use App\Http\Requests\CompanyRequest;
 use App\Models\Company;
 use Validator;
 
-class EditCompany
+readonly class EditCompany
 {
-    public function handle(Company $company, array|CompanyData $changes): Company
+    public function __construct(
+        private EditAddress $editAddress = new EditAddress(),
+        private CompanyRequest $companyRequest = new CompanyRequest(),
+    )
     {
-        $rules = CompanyData::getValidationRules($changes);
+    }
+
+    public function handle(Company $company, array $changes): Company
+    {
+        $rules = $this->companyRequest->rules();
         $rules['nip'][2] .= ','.$company->id;
         $rules['regon'][2] .= ','.$company->id;
 
-        $changes = Validator::make($changes, $rules)->validated();
+        $validated = Validator::make($changes, $rules)->validated();
 
-        if (! ($changes instanceof CompanyData)) {
-            $changes = CompanyData::from($changes);
-        }
-
-        $editAddress = new EditAddress();
-
-        $company->update($changes->except('address', 'correspondenceAddress')->toArray());
-        $editAddress->handle($company->address, $changes->address);
-        $editAddress->handle($company->correspondenceAddress, $changes->correspondenceAddress);
+        $company->update($validated);
+        $this->editAddress->handle($company->address, $changes['address']);
+        $this->editAddress->handle($company->correspondenceAddress, $changes['correspondenceAddress']);
 
         return $company;
     }
