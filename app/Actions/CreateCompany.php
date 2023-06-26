@@ -2,8 +2,9 @@
 
 namespace App\Actions;
 
-use App\Http\Requests\CompanyRequest;
 use App\Models\Company;
+use App\Rules\NipRule;
+use App\Rules\RegonRule;
 use Validator;
 
 readonly class CreateCompany
@@ -16,7 +17,7 @@ readonly class CreateCompany
 
     public function handle(array $company): Company
     {
-        $validated = Validator::make($company, (new CompanyRequest())->rules())->validate();
+        $validated = $this->validate($company);
 
         $validated['address_id'] = $this->createAddress->handle(
             address: $company['address'] ?? []
@@ -26,5 +27,16 @@ readonly class CreateCompany
         )->id;
 
         return Company::create($validated);
+    }
+
+    protected function validate(array $company): array
+    {
+        return Validator::make($company, [
+            'name' => ['required', 'max:255'],
+            'nip' => ['required', new NipRule(), 'unique:companies,nip'],
+            'regon' => ['required', new RegonRule(), 'unique:companies,regon'],
+            'krs' => ['max:10', 'nullable'],
+            'website' => ['nullable', 'url'],
+        ])->validate();
     }
 }

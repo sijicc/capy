@@ -9,6 +9,10 @@ use function Pest\Livewire\livewire;
 
 uses(RefreshDatabase::class);
 
+beforeEach(function () {
+    $this->seed();
+});
+
 it('doesn\'t allow guest to create company', function () {
     get(route('companies.create'))
         ->assertRedirect(route('login'));

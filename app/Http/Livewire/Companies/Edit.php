@@ -33,12 +33,12 @@ class Edit extends Component
 
     public function update(EditCompany $editCompany)
     {
-        $editCompany->handle(
+        $company = $editCompany->handle(
             company: Company::firstWhere('id', Crypt::decryptString($this->company['id'])),
             changes: $this->company
         );
 
-        return redirect()->route('companies.index');
+        return redirect()->route('companies.show', $company);
     }
 
     public function render(): View|\Illuminate\Foundation\Application|Factory|Application

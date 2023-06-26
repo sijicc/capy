@@ -2,26 +2,22 @@
 
 namespace App\Actions;
 
-use App\Http\Requests\CompanyRequest;
 use App\Models\Company;
+use App\Rules\NipRule;
+use App\Rules\RegonRule;
 use Validator;
 
 readonly class EditCompany
 {
     public function __construct(
         private EditAddress $editAddress = new EditAddress(),
-        private CompanyRequest $companyRequest = new CompanyRequest(),
     )
     {
     }
 
     public function handle(Company $company, array $changes): Company
     {
-        $rules = $this->companyRequest->rules();
-        $rules['nip'][2] .= ','.$company->id;
-        $rules['regon'][2] .= ','.$company->id;
-
-        $validated = Validator::make($changes, $rules)->validated();
+        $validated = $this->validate($changes, $company);
 
         $company->update($validated);
         $this->editAddress->handle($company->address, $changes['address']);
@@ -29,4 +25,16 @@ readonly class EditCompany
 
         return $company;
     }
+
+    protected function validate(array $changes, Company $company): array
+    {
+        return Validator::make($changes, [
+            'name' => ['required', 'max:255'],
+            'nip' => ['required', new NipRule(), "unique:companies,nip,{$company->id}"],
+            'regon' => ['required', new RegonRule(), "unique:companies,regon,{$company->id}"],
+            'krs' => ['max:10', 'nullable'],
+            'website' => ['nullable', 'url'],
+        ])->validate();
+    }
+
 }
