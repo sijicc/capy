@@ -16,6 +16,13 @@
                 <td class="flex justify-end">
                     <x-button
                         color="link"
+                        :href="route('users.show', $user)"
+                        class="text-blue-600 hover:text-blue-900"
+                    >
+                        {{ __("Show") }}
+                    </x-button>
+                    <x-button
+                        color="link"
                         :href="route('users.edit', $user)"
                         class="text-indigo-600 hover:text-indigo-900"
                     >

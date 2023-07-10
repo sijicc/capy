@@ -17,18 +17,9 @@
         </div>
         <nav class="flex-1 overflow-y-auto bg-white">
             <ul class="py-4">
-                <x-menu-item href="#">
-                    {{ __("Dashboard") }}
-                </x-menu-item>
-                <x-menu-item :href="route('users.index')">
-                    {{ __("Users") }}
-                </x-menu-item>
-                <x-menu-item :href="route('companies.index')">
-                    {{ __("Companies") }}
-                </x-menu-item>
-                <x-menu-item :href="route('invoices.index')">
-                    {{ __("Invoices") }}
-                </x-menu-item>
+                @foreach ($menuItems as $menuItem)
+                    {!! $menuItem->render() !!}
+                @endforeach
             </ul>
         </nav>
     </div>
