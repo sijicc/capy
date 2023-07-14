@@ -23,13 +23,6 @@ class Sidebar extends Component
                 href: route('users.index'),
                 title: 'Users',
                 icon: 'heroicon-m-user-group',
-                children: [
-                    new MenuItem(
-                        href: route('users.create'),
-                        title: 'Create User',
-                        active: request()->routeIs('users.create'),
-                    ),
-                ],
                 active: request()->routeIs('users.*'),
             ),
             new MenuItem(
@@ -44,6 +37,40 @@ class Sidebar extends Component
                 icon: 'heroicon-m-credit-card',
                 active: request()->routeIs('invoices.*'),
             ),
+            new MenuItem(
+                href: null,
+                title: 'Tools',
+                icon: 'heroicon-m-wrench',
+                children: [
+                    new MenuItem(
+                        href: route('announcements.index'),
+                        title: 'Announcements',
+                        icon: 'heroicon-m-bell',
+                        active: request()->routeIs('announcements.*'),
+                    )
+                ],
+                active: false
+            ),
+            new MenuItem(
+                href: null,
+                title: 'Administration',
+                icon: 'heroicon-m-shield-exclamation',
+                children: [
+                    new MenuItem(
+                        href: route('roles.index'),
+                        title: 'Roles',
+                        icon: 'heroicon-m-check-badge',
+                        active: request()->routeIs('roles.*'),
+                    ),
+                    new MenuItem(
+                        href: route('settings.index'),
+                        title: 'Settings',
+                        icon: 'heroicon-m-cog-6-tooth',
+                        active: request()->routeIs('settings.*'),
+                    )
+                ],
+                active: false
+            )
         ];
     }
 
