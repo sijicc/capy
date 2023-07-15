@@ -1,7 +1,7 @@
 @php
     $classes = "flex items-center px-6 py-2 text-sm font-medium text-gray-600 transition-colors duration-150 hover:bg-gray-100 hover:text-gray-800";
     if ($active) {
-        $classes .= " bg-indigo-100/25 text-gray-800 font-semibold";
+        $classes .= " bg-primary-100/25 text-gray-800 font-semibold";
     }
 @endphp
 
@@ -15,8 +15,8 @@
             <span class="ml-4">{{ $title }}</span>
 
             <span class="ml-auto">
-                @svg('heroicon-m-chevron-right', 'h-5 w-5', ['x-show' => '!open', 'x-cloak'])
-                @svg('heroicon-m-chevron-down', 'h-5 w-5', ['x-show' => 'open', 'x-cloak'])
+                @svg('heroicon-s-chevron-right', 'h-5 w-5', ['x-show' => '!open', 'x-cloak'])
+                @svg('heroicon-s-chevron-down', 'h-5 w-5', ['x-show' => 'open', 'x-cloak'])
             </span>
             <br />
         </span>

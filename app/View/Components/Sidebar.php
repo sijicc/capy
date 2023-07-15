@@ -16,36 +16,36 @@ class Sidebar extends Component
             new MenuItem(
                 href: route('dashboard'),
                 title: 'Dashboard',
-                icon: 'heroicon-m-home',
+                icon: 'heroicon-s-home',
                 active: request()->routeIs('dashboard'),
             ),
             new MenuItem(
                 href: route('users.index'),
                 title: 'Users',
-                icon: 'heroicon-m-user-group',
+                icon: 'heroicon-s-user-group',
                 active: request()->routeIs('users.*'),
             ),
             new MenuItem(
                 href: route('companies.index'),
                 title: 'Companies',
-                icon: 'heroicon-m-building-office',
+                icon: 'heroicon-s-office-building',
                 active: request()->routeIs('companies.*'),
             ),
             new MenuItem(
                 href: route('invoices.index'),
                 title: 'Invoices',
-                icon: 'heroicon-m-credit-card',
+                icon: 'heroicon-s-credit-card',
                 active: request()->routeIs('invoices.*'),
             ),
             new MenuItem(
                 href: null,
                 title: 'Tools',
-                icon: 'heroicon-m-wrench',
+                icon: 'heroicon-s-beaker',
                 children: [
                     new MenuItem(
                         href: route('announcements.index'),
                         title: 'Announcements',
-                        icon: 'heroicon-m-bell',
+                        icon: 'heroicon-s-bell',
                         active: request()->routeIs('announcements.*'),
                     )
                 ],
@@ -54,18 +54,18 @@ class Sidebar extends Component
             new MenuItem(
                 href: null,
                 title: 'Administration',
-                icon: 'heroicon-m-shield-exclamation',
+                icon: 'heroicon-s-shield-exclamation',
                 children: [
                     new MenuItem(
                         href: route('roles.index'),
                         title: 'Roles',
-                        icon: 'heroicon-m-check-badge',
+                        icon: 'heroicon-s-badge-check',
                         active: request()->routeIs('roles.*'),
                     ),
                     new MenuItem(
                         href: route('settings.index'),
                         title: 'Settings',
-                        icon: 'heroicon-m-cog-6-tooth',
+                        icon: 'heroicon-s-cog',
                         active: request()->routeIs('settings.*'),
                     )
                 ],

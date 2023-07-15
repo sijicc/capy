@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             InitialUserSeeder::class,
             InvoiceSeeder::class,
+            AnnouncementSeeder::class,
         ]);
     }
 }

@@ -12,7 +12,6 @@ return new class extends Migration {
 
             $table->string('title');
             $table->text('content');
-            $table->boolean('is_pinned')->default(false);
             $table->boolean('should_notify')->default(false);
             $table->boolean('should_email')->default(false);
             $table->timestamp('publish_at')->nullable();

@@ -2,30 +2,57 @@
 
 namespace App\Http\Livewire\Companies;
 
+use App\Exports\CompaniesExport;
 use App\Models\Company;
-use Illuminate\Contracts\View\Factory;
+use Exception;
+use Filament\Tables;
 use Illuminate\Contracts\View\View;
-use Illuminate\Foundation\Application;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Livewire\Component;
-use Livewire\WithPagination;
+use Maatwebsite\Excel\Facades\Excel;
 
-class Table extends Component
+class Table extends Component implements Tables\Contracts\HasTable
 {
-    use WithPagination;
+    use Tables\Concerns\InteractsWithTable;
 
-    public int $perPage = 10;
-
-    public function confirmDelete(int $id): void
+    protected function getTableQuery(): Builder
     {
-        $this->dispatchBrowserEvent('confirm-delete', ['id' => $id]);
+        return Company::query();
     }
 
-    public function render(): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
+    protected function getTableColumns(): array
     {
-        $companies = Company::paginate($this->perPage);
+        return [
+            Tables\Columns\TextColumn::make('id')->searchable()->sortable(),
+            Tables\Columns\TextColumn::make('name')->searchable()->sortable(),
+            Tables\Columns\TextColumn::make('nip')->searchable()->sortable(),
+            Tables\Columns\TextColumn::make('regon')->searchable()->sortable(),
+            Tables\Columns\TextColumn::make('website')->searchable()->sortable(),
+            Tables\Columns\BadgeColumn::make('created_at')->searchable()->sortable(),
+            Tables\Columns\BadgeColumn::make('updated_at')->searchable()->sortable(),
+        ];
+    }
 
-        return view('livewire.companies.table', [
-            'companies' => $companies,
-        ]);
+    /**
+     * @throws Exception
+     */
+    protected function getTableBulkActions(): array
+    {
+        return [
+            Tables\Actions\BulkAction::make('delete')
+                ->action(fn(Collection $records) => $records->each(fn(Company $company) => $company->delete()))
+                ->deselectRecordsAfterCompletion()
+                ->requiresConfirmation(),
+            Tables\Actions\BulkAction::make('export')
+                ->action(fn(Collection $records) => Excel::download(new CompaniesExport($records), 'companies.xlsx'))
+                ->deselectRecordsAfterCompletion()
+                ->requiresConfirmation(),
+        ];
+    }
+
+    public function render(): View
+    {
+        return view('livewire.companies.table');
     }
 }

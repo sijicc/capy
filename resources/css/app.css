@@ -1,7 +1,10 @@
+@import '../../vendor/filament/forms/dist/module.esm.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 @tailwind forms;
+@tailwind typography;
 
 [x-cloak] {
     display: none;

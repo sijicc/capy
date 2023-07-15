@@ -1,5 +1,5 @@
-<x-auth-layout :title="[['name' => __('Announcement'), 'route' => route('announcements.index')]]">
-    <x-card class="h-screen">
+<x-auth-layout :title="[['name' => __('Announcements'), 'route' => route('announcements.index')]]">
+    <x-card class="min-h-screen">
         <x-slot name="header">
             <div class="flex justify-between">
                 <div>

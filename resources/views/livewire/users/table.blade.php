@@ -24,7 +24,7 @@
                     <x-button
                         color="link"
                         :href="route('users.edit', $user)"
-                        class="text-indigo-600 hover:text-indigo-900"
+                        class="text-primary-600 hover:text-primary-900"
                     >
                         {{ __("Edit") }}
                     </x-button>

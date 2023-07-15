@@ -9,6 +9,7 @@
         @vite(["resources/css/app.css", "resources/js/app.js"])
         @stack("head")
         @livewireStyles
+        @livewireScripts
     </head>
     <body class="antialiased" x-data="{ sidebarOpen: false }">
         <x-sidebar />
@@ -21,7 +22,7 @@
                     x-cloak
                     class="text-gray-500 transition-colors duration-150 hover:text-gray-800"
                 >
-                    @svg('heroicon-m-bars-3', 'h-6 w-6')
+                    @svg('heroicon-s-menu', 'h-6 w-6')
                 </button>
                 <ul class="my-4 flex items-center space-x-2 pl-4 text-sm font-medium text-gray-500">
                     @foreach ($title as $item)
@@ -44,7 +45,6 @@
                     @endforeach
                 </ul>
             </div>
-            <livewire:notifications />
         </div>
 
         <main
@@ -54,6 +54,6 @@
             {{ $slot }}
         </main>
         @stack("scripts")
-        @livewireScripts
+        @livewire("notifications")
     </body>
 </html>
