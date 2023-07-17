@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use App\Notifications\NewAnnouncementNotification;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Facades\Notification;
 
 class Announcement extends Model
 {
@@ -20,6 +22,17 @@ class Announcement extends Model
         'published_at' => 'datetime',
         'publish_at' => 'datetime',
     ];
+
+    public function publish(): void
+    {
+        if ($this->should_notify || $this->should_email) {
+            Notification::send(User::all(), new NewAnnouncementNotification($this));
+        }
+
+        $this->update([
+            'published_at' => now(),
+        ]);
+    }
 
     public function user(): BelongsTo
     {

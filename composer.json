@@ -13,6 +13,7 @@
         "blade-ui-kit/blade-icons": "^1.5",
         "cknow/laravel-money": "^7.1",
         "filament/forms": "^2.0",
+        "filament/notifications": "^2.0",
         "filament/tables": "^2.0",
         "gehrisandro/tailwind-merge-laravel": "^0.1.0",
         "guzzlehttp/guzzle": "^7.2",

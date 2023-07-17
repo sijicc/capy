@@ -14,7 +14,7 @@
     <body class="antialiased" x-data="{ sidebarOpen: false }">
         <x-sidebar />
 
-        <div :class="sidebarOpen ? 'md:ml-64' : ''" class="flex w-full items-center justify-between pl-6 lg:pl-8">
+        <div :class="sidebarOpen ? 'md:ml-64' : ''" class="flex w-full items-center justify-between px-6 lg:px-8">
             <div class="flex items-center">
                 <button
                     id="sidebar-toggle"
@@ -45,6 +45,7 @@
                     @endforeach
                 </ul>
             </div>
+            <livewire:notifications-bell />
         </div>
 
         <main

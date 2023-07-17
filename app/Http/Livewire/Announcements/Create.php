@@ -5,7 +5,9 @@ namespace App\Http\Livewire\Announcements;
 use App\Models\Announcement;
 use Filament\Forms;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Livewire\Component;
+use Livewire\Redirector;
 
 class Create extends Component implements Forms\Contracts\HasForms
 {
@@ -29,11 +31,11 @@ class Create extends Component implements Forms\Contracts\HasForms
         ];
     }
 
-    public function submit()
+    public function submit(): RedirectResponse|Redirector
     {
         $this->validate();
 
-        Announcement::create([
+        $announcement = Announcement::create([
             'title' => $this->title,
             'content' => $this->content,
             'should_notify' => $this->should_notify,
@@ -41,6 +43,10 @@ class Create extends Component implements Forms\Contracts\HasForms
             'publish_at' => $this->publish_at ?? now(),
             'user_id' => auth()->user()->id,
         ]);
+
+        if ($announcement->publish_at <= now()) {
+            $announcement->publish();
+        }
 
         return redirect()->route('announcements.index');
     }

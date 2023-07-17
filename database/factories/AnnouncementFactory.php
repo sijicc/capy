@@ -13,13 +13,14 @@ class AnnouncementFactory extends Factory
 
     public function definition(): array
     {
+        $publishAt = $this->faker->dateTimeBetween('-1 week', '+1 week');
         return [
             'title' => $this->faker->word(),
             'content' => $this->faker->paragraph(),
             'should_notify' => $this->faker->boolean(),
             'should_email' => $this->faker->boolean(),
-            'publish_at' => $this->faker->dateTimeBetween('-1 week', '+1 week'),
-            'published_at' => $this->faker->dateTimeBetween('-1 week', '+1 week'),
+            'publish_at' => $publishAt,
+            'published_at' => $publishAt <= now() ? $publishAt : null,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
 

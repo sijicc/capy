@@ -3,7 +3,9 @@
 namespace App\Http\Livewire\Announcements;
 
 use App\Models\Announcement;
+use Exception;
 use Filament\Forms;
+use Filament\Notifications\Notification;
 use Filament\Tables;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -35,6 +37,9 @@ class Table extends Component implements Tables\Contracts\HasTable
         ];
     }
 
+    /**
+     * @throws Exception
+     */
     protected function getTableFilters(): array
     {
         return [
@@ -59,6 +64,46 @@ class Table extends Component implements Tables\Contracts\HasTable
                         );
                 }),
         ];
+    }
+
+    /**
+     * @throws Exception
+     */
+    protected function getTableActions(): array
+    {
+        return [
+            Tables\Actions\ActionGroup::make([
+                Tables\Actions\Action::make('show')
+                    ->icon('heroicon-o-eye')
+                    ->url(fn(Announcement $record): string => route('announcements.show', $record))
+                    ->openUrlInNewTab(),
+                Tables\Actions\Action::make('publish')
+                    ->icon('heroicon-o-mail')
+                    ->action(function (Announcement $record) {
+                        Notification::make()
+                            ->title('Announcement published!')
+                            ->success()
+                            ->send();
+                        $record->publish();
+                    })
+                    ->visible(fn(Announcement $record): bool => $record->published_at === null)
+                    ->requiresConfirmation(),
+                Tables\Actions\Action::make('edit')
+                    ->icon('heroicon-o-pencil')
+                    ->url(fn(Announcement $record): string => route('announcements.edit', $record))
+                    ->visible(fn(Announcement $record): bool => $record->published_at === null),
+                Tables\Actions\Action::make('delete')
+                    ->icon('heroicon-o-trash')
+                    ->action(fn(Announcement $record): bool => $record->delete())
+                    ->visible(fn(Announcement $record): bool => $record->published_at === null)
+                    ->requiresConfirmation(),
+            ]),
+        ];
+    }
+
+    protected function shouldPersistTableFiltersInSession(): bool
+    {
+        return true;
     }
 
     public function render(): View|\Illuminate\Foundation\Application|Factory|Application
