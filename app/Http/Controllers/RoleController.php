@@ -9,27 +9,19 @@ class RoleController extends Controller
 {
     public function index()
     {
-
+        return view('roles.index');
     }
 
     public function create()
     {
-    }
-
-    public function store(Request $request)
-    {
-    }
-
-    public function show(Role $role)
-    {
+        return view('roles.create');
     }
 
     public function edit(Role $role)
     {
-    }
-
-    public function update(Request $request, Role $role)
-    {
+        return view('roles.edit', [
+            'role' => $role,
+        ]);
     }
 
     public function destroy(Role $role)

@@ -32,12 +32,6 @@ class Sidebar extends Component
                 active: request()->routeIs('companies.*'),
             ),
             new MenuItem(
-                href: route('invoices.index'),
-                title: 'Invoices',
-                icon: 'heroicon-s-credit-card',
-                active: request()->routeIs('invoices.*'),
-            ),
-            new MenuItem(
                 href: null,
                 title: 'Tools',
                 icon: 'heroicon-s-beaker',

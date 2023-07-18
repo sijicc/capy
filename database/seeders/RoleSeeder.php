@@ -10,7 +10,12 @@ class RoleSeeder extends Seeder
 {
     public function run(): void
     {
-        $admin = Role::create(['name' => 'admin']);
+        $admin = Role::create([
+            'pretty_name' => 'Administrator',
+            'description' => 'Administrators have full access to the application.',
+            'name' => 'admin',
+            'is_removable' => false,
+        ]);
         $admin->syncPermissions(Permission::all()->pluck('name'));
     }
 }

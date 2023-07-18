@@ -7,15 +7,17 @@ use Exception;
 use Filament\Forms;
 use Filament\Notifications\Notification;
 use Filament\Tables;
+use Filament\Tables\Concerns\InteractsWithTable;
+use Filament\Tables\Contracts\HasTable;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
 
-class Table extends Component implements Tables\Contracts\HasTable
+class Table extends Component implements HasTable
 {
-    use Tables\Concerns\InteractsWithTable;
+    use InteractsWithTable;
 
     protected function getTableQuery(): Builder
     {

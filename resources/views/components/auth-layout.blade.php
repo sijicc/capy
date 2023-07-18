@@ -4,7 +4,7 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-        <title>{{ collect($title)->pluck("name")->implode(" / ") }} | {{ config("app.name") }}</title>
+        <title>{{ Breadcrumbs::generate()->pluck("title")->implode(" | ") ." | " . config("app.name") }}</title>
 
         @vite(["resources/css/app.css", "resources/js/app.js"])
         @stack("head")
@@ -25,16 +25,16 @@
                     @svg('heroicon-s-menu', 'h-6 w-6')
                 </button>
                 <ul class="my-4 flex items-center space-x-2 pl-4 text-sm font-medium text-gray-500">
-                    @foreach ($title as $item)
+                    @foreach (Breadcrumbs::generate() as $item)
                         <li>
                             <a
-                                href="{{ $item["route"] }}"
+                                href="{{ $item->url }}"
                                 @class([
                                     "text-gray-900" => $loop->last,
                                     "font-medium text-gray-500 transition-colors duration-150 hover:text-gray-700" => ! $loop->last,
                                 ])
                             >
-                                {{ $item["name"] }}
+                                {{ $item->title }}
                             </a>
                         </li>
                         @if (! $loop->last)

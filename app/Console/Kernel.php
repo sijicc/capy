@@ -3,7 +3,6 @@
 namespace App\Console;
 
 use App\Actions\PublishAnnouncements;
-use App\Notifications\NewAnnouncementNotification;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 

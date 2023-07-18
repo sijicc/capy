@@ -1,6 +1,3 @@
-<x-auth-layout :title="[
-    ['name' => __('Companies'), 'route' => route('companies.index')],
-    ['name' => __('Create'), 'route' => route('companies.create')]
-    ]">
+<x-auth-layout>
     <livewire:companies.create />
 </x-auth-layout>

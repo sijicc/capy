@@ -1,11 +1,4 @@
-@php
-    $title = [
-        ["name" => __("Users"), "route" => route("users.index")],
-        ["name" => $user->name, "route" => route("users.show", $user->id)],
-    ];
-@endphp
-
-<x-auth-layout :title="$title">
+<x-auth-layout>
     <x-card class="min-h-screen">
         <x-slot name="header">
             <h3 class="text-lg font-medium leading-6 text-gray-900">
