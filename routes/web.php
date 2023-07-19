@@ -24,9 +24,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('users', UserController::class);
     Route::resource('companies', CompanyController::class);
     Route::resource('announcements', AnnouncementController::class);
-});
 
-Route::group(['middleware' => 'role:admin'], function () {
-    Route::resource('roles', RoleController::class);
-    Route::resource('settings', SettingController::class);
+    Route::group(['middleware' => 'role:admin'], function () {
+        Route::resource('roles', RoleController::class);
+        Route::resource('settings', SettingController::class);
+    });
 });
