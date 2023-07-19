@@ -15,8 +15,7 @@ class NewAnnouncementMail extends Mailable
 
     public function __construct(
         public Announcement $announcement,
-    )
-    {
+    ) {
     }
 
     public function envelope(): Envelope

@@ -14,9 +14,13 @@ class Create extends Component implements Forms\Contracts\HasForms
     use Forms\Concerns\InteractsWithForms;
 
     public $title = '';
+
     public $content = '';
+
     public $should_notify = false;
+
     public $should_email = false;
+
     public $publish_at;
 
     protected function getFormSchema(): array

@@ -28,7 +28,7 @@ class InvoiceNumberTemplate extends Model
 
     public const INVOICE_TYPE = '@INVOICE_TYPE@';
 
-    public function getNextNumberAttribute(?Carbon $date = null): int
+    public function getNextNumberAttribute(Carbon $date = null): int
     {
         if (! $date) {
             $date = now();

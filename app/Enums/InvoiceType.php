@@ -25,6 +25,6 @@ enum InvoiceType: string
 
     public static function asCollection(): Collection
     {
-        return collect(self::cases())->mapWithKeys(fn(self $type) => [$type->value => $type->label()]);
+        return collect(self::cases())->mapWithKeys(fn (self $type) => [$type->value => $type->label()]);
     }
 }

@@ -2,12 +2,12 @@
 
 use App\Http\Livewire\Companies\Create;
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use function Pest\Laravel\actingAs;
 use function Pest\Laravel\get;
 use function Pest\Livewire\livewire;
 
-uses(RefreshDatabase::class);
+uses(LazilyRefreshDatabase::class);
 
 beforeEach(function () {
     $this->seed();

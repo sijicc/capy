@@ -32,7 +32,7 @@ class Table extends Component implements HasTable
             Tables\Columns\BadgeColumn::make('published_at')->searchable()->sortable(),
             Tables\Columns\BadgeColumn::make('publish_at')->sortable()->colors([
                 'success',
-                'secondary' => static fn($state): bool => $state > now(),
+                'secondary' => static fn ($state): bool => $state > now(),
             ]),
             Tables\Columns\BadgeColumn::make('created_at')->sortable(),
             Tables\Columns\BadgeColumn::make('updated_at')->sortable(),
@@ -46,9 +46,9 @@ class Table extends Component implements HasTable
     {
         return [
             Tables\Filters\Filter::make('should_notify')
-                ->query(fn(Builder $query): Builder => $query->where('should_notify', true)),
+                ->query(fn (Builder $query): Builder => $query->where('should_notify', true)),
             Tables\Filters\Filter::make('should_email')
-                ->query(fn(Builder $query): Builder => $query->where('should_email', true)),
+                ->query(fn (Builder $query): Builder => $query->where('should_email', true)),
             Tables\Filters\Filter::make('published_at')
                 ->form([
                     Forms\Components\DateTimePicker::make('published_from'),
@@ -58,11 +58,11 @@ class Table extends Component implements HasTable
                     return $query
                         ->when(
                             $data['published_from'],
-                            fn(Builder $query, $publishedFrom): Builder => $query->where('published_at', '>=', $publishedFrom)
+                            fn (Builder $query, $publishedFrom): Builder => $query->where('published_at', '>=', $publishedFrom)
                         )
                         ->when(
                             $data['published_to'],
-                            fn(Builder $query, $publishedTo): Builder => $query->where('published_at', '<=', $publishedTo)
+                            fn (Builder $query, $publishedTo): Builder => $query->where('published_at', '<=', $publishedTo)
                         );
                 }),
         ];
@@ -77,7 +77,7 @@ class Table extends Component implements HasTable
             Tables\Actions\ActionGroup::make([
                 Tables\Actions\Action::make('show')
                     ->icon('heroicon-o-eye')
-                    ->url(fn(Announcement $record): string => route('announcements.show', $record))
+                    ->url(fn (Announcement $record): string => route('announcements.show', $record))
                     ->openUrlInNewTab(),
                 Tables\Actions\Action::make('publish')
                     ->icon('heroicon-o-mail')
@@ -88,16 +88,16 @@ class Table extends Component implements HasTable
                             ->send();
                         $record->publish();
                     })
-                    ->visible(fn(Announcement $record): bool => $record->published_at === null)
+                    ->visible(fn (Announcement $record): bool => $record->published_at === null)
                     ->requiresConfirmation(),
                 Tables\Actions\Action::make('edit')
                     ->icon('heroicon-o-pencil')
-                    ->url(fn(Announcement $record): string => route('announcements.edit', $record))
-                    ->visible(fn(Announcement $record): bool => $record->published_at === null),
+                    ->url(fn (Announcement $record): string => route('announcements.edit', $record))
+                    ->visible(fn (Announcement $record): bool => $record->published_at === null),
                 Tables\Actions\Action::make('delete')
                     ->icon('heroicon-o-trash')
-                    ->action(fn(Announcement $record): bool => $record->delete())
-                    ->visible(fn(Announcement $record): bool => $record->published_at === null)
+                    ->action(fn (Announcement $record): bool => $record->delete())
+                    ->visible(fn (Announcement $record): bool => $record->published_at === null)
                     ->requiresConfirmation(),
             ]),
         ];

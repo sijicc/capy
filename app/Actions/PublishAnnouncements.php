@@ -18,6 +18,6 @@ class PublishAnnouncements
 
     public function __invoke(): void
     {
-        $this->announcements->each(fn(Announcement $announcement) => $announcement->publish());
+        $this->announcements->each(fn (Announcement $announcement) => $announcement->publish());
     }
 }

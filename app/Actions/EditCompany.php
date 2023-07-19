@@ -11,8 +11,7 @@ readonly class EditCompany
 {
     public function __construct(
         private EditAddress $editAddress = new EditAddress(),
-    )
-    {
+    ) {
     }
 
     public function handle(Company $company, array $changes): Company
@@ -36,5 +35,4 @@ readonly class EditCompany
             'website' => ['nullable', 'url'],
         ])->validate();
     }
-
 }

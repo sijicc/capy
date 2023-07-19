@@ -12,36 +12,21 @@ class AnnouncementPolicy
 
     public function viewAny(User $user): bool
     {
-        return true;
+        return $user->can('announcements:viewAny');
     }
 
     public function view(User $user, Announcement $announcement): bool
     {
-        return true;
+        return $user->can('announcements:view');
     }
 
     public function create(User $user): bool
     {
-        return true;
+        return $user->can('announcements:create');
     }
 
     public function update(User $user, Announcement $announcement): bool
     {
-        return true;
-    }
-
-    public function delete(User $user, Announcement $announcement): bool
-    {
-        return true;
-    }
-
-    public function restore(User $user, Announcement $announcement): bool
-    {
-        return true;
-    }
-
-    public function forceDelete(User $user, Announcement $announcement): bool
-    {
-        return true;
+        return $user->can('announcements:update');
     }
 }

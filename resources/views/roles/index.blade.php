@@ -20,6 +20,6 @@
                 </div>
             </div>
         </x-slot>
-        <livewire:roles.table />
+        <livewire:roles.roles-table />
     </x-card>
 </x-auth-layout>

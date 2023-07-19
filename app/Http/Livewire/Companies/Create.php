@@ -43,6 +43,7 @@ class Create extends Component
     public function store(CreateCompany $createCompany)
     {
         $createCompany->handle($this->company);
+
         return redirect()->route('companies.index');
     }
 

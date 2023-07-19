@@ -59,7 +59,7 @@ Breadcrumbs::for('roles.create', function (BreadcrumbTrail $trail) {
 });
 
 Breadcrumbs::for('roles.edit', function (BreadcrumbTrail $trail, Role $role) {
-    $trail->parent('roles.show', $role);
+    $trail->parent('roles.index');
     $trail->push("Edit {$role->name}", route('roles.edit', $role));
 });
 
@@ -81,4 +81,3 @@ Breadcrumbs::for('announcements.edit', function (BreadcrumbTrail $trail, Announc
     $trail->parent('announcements.show', $announcement);
     $trail->push("Edit {$announcement->title}", route('announcements.edit', $announcement));
 });
-

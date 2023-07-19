@@ -41,7 +41,7 @@ class Sidebar extends Component
                         title: 'Announcements',
                         icon: 'heroicon-s-bell',
                         active: request()->routeIs('announcements.*'),
-                    )
+                    ),
                 ],
                 active: false
             ),
@@ -61,10 +61,10 @@ class Sidebar extends Component
                         title: 'Settings',
                         icon: 'heroicon-s-cog',
                         active: request()->routeIs('settings.*'),
-                    )
+                    ),
                 ],
                 active: false
-            )
+            ),
         ];
     }
 

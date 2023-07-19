@@ -3,7 +3,7 @@
 use App\Models\Announcement;
 use App\Models\User;
 use App\Notifications\NewAnnouncementNotification;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use function Pest\Laravel\actingAs;
 use function Pest\Laravel\assertDatabaseHas;
 use function Pest\Laravel\assertDatabaseMissing;
@@ -11,7 +11,7 @@ use function Pest\Laravel\get;
 use function Pest\Laravel\travel;
 use function Pest\Livewire\livewire;
 
-uses(RefreshDatabase::class);
+uses(LazilyRefreshDatabase::class);
 
 it('doesn\'t allow guest to create announcement', function () {
     get(route('announcements.create'))

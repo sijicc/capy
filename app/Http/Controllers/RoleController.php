@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Role::class, 'role');
+    }
+
     public function index()
     {
         return view('roles.index');
@@ -22,9 +26,5 @@ class RoleController extends Controller
         return view('roles.edit', [
             'role' => $role,
         ]);
-    }
-
-    public function destroy(Role $role)
-    {
     }
 }

@@ -9,15 +9,14 @@ class MenuItem extends Component
 {
     public function __construct(
         public ?string $href,
-        public string  $title,
+        public string $title,
         public ?string $icon = null,
         /** @var MenuItem[] */
-        public array   $children = [],
-        public bool    $active = false,
-    )
-    {
+        public array $children = [],
+        public bool $active = false,
+    ) {
         if (count($this->children) > 0) {
-            $this->active = collect($this->children)->contains(fn(MenuItem $item) => $item->active);
+            $this->active = collect($this->children)->contains(fn (MenuItem $item) => $item->active);
         }
     }
 

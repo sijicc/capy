@@ -14,6 +14,7 @@ class AnnouncementFactory extends Factory
     public function definition(): array
     {
         $publishAt = $this->faker->dateTimeBetween('-1 week', '+1 week');
+
         return [
             'title' => $this->faker->word(),
             'content' => $this->faker->paragraph(),

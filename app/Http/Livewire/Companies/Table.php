@@ -41,11 +41,11 @@ class Table extends Component implements Tables\Contracts\HasTable
     {
         return [
             Tables\Actions\BulkAction::make('delete')
-                ->action(fn(Collection $records) => $records->each(fn(Company $company) => $company->delete()))
+                ->action(fn (Collection $records) => $records->each(fn (Company $company) => $company->delete()))
                 ->deselectRecordsAfterCompletion()
                 ->requiresConfirmation(),
             Tables\Actions\BulkAction::make('export')
-                ->action(fn(Collection $records) => Excel::download(new CompaniesExport($records), 'companies.xlsx'))
+                ->action(fn (Collection $records) => Excel::download(new CompaniesExport($records), 'companies.xlsx'))
                 ->deselectRecordsAfterCompletion()
                 ->requiresConfirmation(),
         ];

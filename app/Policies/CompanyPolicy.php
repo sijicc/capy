@@ -17,7 +17,7 @@ class CompanyPolicy
 
     public function view(User $user, Company $company): bool
     {
-        return $user->can('companies:view', $company);
+        return $user->can('companies:view');
     }
 
     public function create(User $user): bool
@@ -27,11 +27,11 @@ class CompanyPolicy
 
     public function update(User $user, Company $company): bool
     {
-        return $user->can('companies:update', $company);
+        return $user->can('companies:update');
     }
 
     public function delete(User $user, Company $company): bool
     {
-        return $user->can('companies:delete', $company);
+        return $user->can('companies:delete');
     }
 }

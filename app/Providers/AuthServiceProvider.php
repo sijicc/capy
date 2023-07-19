@@ -36,7 +36,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Gate::before(function (User $user) {
+        Gate::after(function (User $user) {
             return $user->hasRole('admin') ? true : null;
         });
     }

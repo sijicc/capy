@@ -21,7 +21,6 @@ class AnnouncementController extends Controller
         return view('announcements.create');
     }
 
-
     public function show(Announcement $announcement)
     {
         return view('announcements.show', [
@@ -34,12 +33,5 @@ class AnnouncementController extends Controller
         return view('announcements.edit', [
             'announcement' => $announcement,
         ]);
-    }
-
-    public function destroy(Announcement $announcement)
-    {
-        $announcement->delete();
-
-        return redirect()->route('announcements.index')->with('success', __('Announcement deleted successfully'));
     }
 }

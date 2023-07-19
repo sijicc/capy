@@ -9,8 +9,7 @@ readonly class CreateInvoice
 {
     public function __construct(
         protected CreateItem $createItem = new CreateItem(),
-    )
-    {
+    ) {
     }
 
     public function handle(array $invoice): Invoice

@@ -2,13 +2,14 @@
 
 namespace App\Http\Livewire\Roles;
 
+use App\Policies\RolePolicy;
 use Filament\Tables;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
 use Spatie\Permission\Models\Role;
 
-class Table extends Component implements Tables\Contracts\HasTable
+class RolesTable extends Component implements Tables\Contracts\HasTable
 {
     use Tables\Concerns\InteractsWithTable;
 
@@ -41,21 +42,24 @@ class Table extends Component implements Tables\Contracts\HasTable
      */
     protected function getTableActions(): array
     {
+        $rolePolicy = new RolePolicy();
         return [
             Tables\Actions\Action::make('delete')
                 ->color('danger')
                 ->icon('heroicon-o-trash')
-                ->visible(fn(Role $record) => $record->is_removable)
-                ->requiresConfirmation(fn(Role $record) => 'Are you sure you want to remove ' . $record->name . '?'),
+                ->visible(fn(Role $record) => $rolePolicy->delete(auth()->user(), $record))
+                ->action(fn(Role $record) => $record->delete())
+                ->requiresConfirmation(),
             Tables\Actions\Action::make('edit')
                 ->color('primary')
                 ->icon('heroicon-o-pencil')
+                ->visible(fn(Role $record) => $rolePolicy->update(auth()->user(), $record))
                 ->url(fn(Role $record) => route('roles.edit', $record)),
         ];
     }
-    
+
     public function render(): View
     {
-        return view('livewire.roles.table');
+        return view('livewire.roles.roles-table');
     }
 }

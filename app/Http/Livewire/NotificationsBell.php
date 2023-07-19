@@ -13,6 +13,7 @@ class NotificationsBell extends Component
     public function getListeners(): array
     {
         $id = auth()->id();
+
         return [
             "echo-private:App.Models.User.{$id},.Illuminate\Notifications\Events\BroadcastNotificationCreated" => 'updateNotifications',
         ];

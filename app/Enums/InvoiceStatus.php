@@ -27,6 +27,6 @@ enum InvoiceStatus: string
 
     public static function asCollection(): Collection
     {
-        return collect(self::cases())->mapWithKeys(fn(self $status) => [$status->value => $status->label()]);
+        return collect(self::cases())->mapWithKeys(fn (self $status) => [$status->value => $status->label()]);
     }
 }

@@ -35,5 +35,4 @@ readonly class EditUser
             'email' => ['required', 'string', 'email', 'max:255', "unique:users,email,{$user->id}"],
         ])->validate();
     }
-
 }
