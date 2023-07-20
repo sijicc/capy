@@ -20,6 +20,6 @@
                 </div>
             </div>
         </x-slot>
-        <livewire:users.table />
+        <livewire:users.users-table />
     </x-card>
 </x-auth-layout>
