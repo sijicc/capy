@@ -24,8 +24,10 @@ class AnnouncementPolicy
             if ($user->can('announcements:viewAny')) {
                 return true;
             }
+
             return false;
         }
+
         return $user->can('announcements:view');
     }
 

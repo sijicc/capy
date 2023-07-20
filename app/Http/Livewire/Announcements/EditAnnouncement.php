@@ -14,10 +14,15 @@ class EditAnnouncement extends Component implements Forms\Contracts\HasForms
     use Forms\Concerns\InteractsWithForms;
 
     public Announcement $announcement;
+
     public $title = '';
+
     public $content = '';
+
     public $should_notify = false;
+
     public $should_email = false;
+
     public $publish_at;
 
     public function mount()
@@ -60,5 +65,4 @@ class EditAnnouncement extends Component implements Forms\Contracts\HasForms
                 ->afterOrEqual('today'),
         ];
     }
-
 }

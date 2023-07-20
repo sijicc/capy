@@ -15,9 +15,15 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
 
+// TODO: Rename to AnnouncementsTable
 class Table extends Component implements HasTable
 {
     use InteractsWithTable;
+
+    public function render(): View|\Illuminate\Foundation\Application|Factory|Application
+    {
+        return view('livewire.announcements.table');
+    }
 
     protected function getTableQuery(): Builder
     {
@@ -49,6 +55,10 @@ class Table extends Component implements HasTable
                 ->query(fn(Builder $query): Builder => $query->where('should_notify', true)),
             Tables\Filters\Filter::make('should_email')
                 ->query(fn(Builder $query): Builder => $query->where('should_email', true)),
+            Tables\Filters\Filter::make('published')
+                ->query(fn(Builder $query): Builder => $query->published()),
+            Tables\Filters\Filter::make('unpublished')
+                ->query(fn(Builder $query): Builder => $query->unpublished()),
             Tables\Filters\Filter::make('published_at')
                 ->form([
                     Forms\Components\DateTimePicker::make('published_from'),
@@ -106,10 +116,5 @@ class Table extends Component implements HasTable
     protected function shouldPersistTableFiltersInSession(): bool
     {
         return true;
-    }
-
-    public function render(): View|\Illuminate\Foundation\Application|Factory|Application
-    {
-        return view('livewire.announcements.table');
     }
 }

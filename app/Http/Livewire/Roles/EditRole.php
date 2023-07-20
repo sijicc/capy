@@ -17,7 +17,9 @@ class EditRole extends Component implements Forms\Contracts\HasForms
     public Role $role;
 
     public $name;
+
     public $description;
+
     public $permissions = [];
 
     public function mount(): void

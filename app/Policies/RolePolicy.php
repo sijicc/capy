@@ -25,6 +25,7 @@ class RolePolicy
         if ($role->name === 'admin') {
             return false;
         }
+
         return $user->can('roles:update');
     }
 
@@ -33,6 +34,7 @@ class RolePolicy
         if ($role->name === 'admin') {
             return false;
         }
+
         return $user->can('roles:delete');
     }
 }

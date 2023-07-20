@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Notifications\NewAnnouncementNotification;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -47,6 +48,16 @@ class Announcement extends Model
     public function isNotPublished(): bool
     {
         return !$this->isPublished();
+    }
+
+    public function scopePublished(Builder $query): Builder
+    {
+        return $query->whereNotNull('published_at');
+    }
+
+    public function scopeUnpublished(Builder $query): Builder
+    {
+        return $query->whereNull('published_at');
     }
 
     public function readers(): BelongsToMany

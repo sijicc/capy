@@ -17,7 +17,6 @@ it('doesn\'t allow guests to edit announcements', function () {
         ->assertRedirect(route('login'));
 });
 
-
 it('doesn\'t allow any user to edit published announcement', function () {
     $announcement = App\Models\Announcement::factory()->create();
     $announcement->publish();
@@ -38,7 +37,6 @@ it('doesn\'t allow any user to edit published announcement', function () {
         ->assertForbidden();
 });
 
-
 it('allows user with announcements:view permission to see existing announcement', function () {
     seed(PermissionSeeder::class);
 
@@ -52,13 +50,11 @@ it('allows user with announcements:view permission to see existing announcement'
         ->assertOk();
 });
 
-
 it('prevents user from seeing not created announcement', function () {
     $this->actingAs(User::factory()->create())
         ->get(route('announcements.show', 45))
         ->assertNotFound();
 });
-
 
 it('prevents user from seeing not published announcement', function () {
     seed(PermissionSeeder::class);
@@ -127,4 +123,3 @@ it('prevents user without announcements:viewAny permission from seeing announcem
         ->get(route('announcements.index'))
         ->assertForbidden();
 });
-

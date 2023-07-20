@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Roles;
 
 use App\Policies\RolePolicy;
+use Exception;
 use Filament\Tables;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
@@ -38,11 +39,12 @@ class RolesTable extends Component implements Tables\Contracts\HasTable
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     protected function getTableActions(): array
     {
         $rolePolicy = new RolePolicy();
+
         return [
             Tables\Actions\Action::make('delete')
                 ->color('danger')
