@@ -1,62 +1,83 @@
 <?php
 
+use App\Models\Announcement;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
+use function Pest\Livewire\livewire;
 
 uses(LazilyRefreshDatabase::class);
 
-it('doesn\'t allow guests to edit announcements', function () {
-    // TODO: this should get moved to AnnouncementControllerTest
-    $announcement = App\Models\Announcement::factory()->create();
+it('allows user to edit announcement with correct data', function () {
+    $announcement = Announcement::factory()->unpublished()->create();
 
-    $this->get(route('announcements.edit', $announcement))
-        ->assertRedirect(route('login'));
+    $updates = [
+        'title' => 'new title',
+        'content' => 'new content',
+        'publish_at' => now()->addWeek(),
+    ];
+
+    livewire('announcements.edit-announcement', ['announcement' => $announcement])
+        ->set('title', $updates['title'])
+        ->set('content', $updates['content'])
+        ->set('publish_at', $updates['publish_at'])
+        ->call('submit')
+        ->assertRedirect(route('announcements.index'));
+
+    $this->assertDatabaseHas('announcements', $updates);
 });
 
-//it('doesn\'t allow any user to edit published announcement', function () {
-//    // TODO: this should get moved to AnnouncementControllerTest
-//    $announcement = App\Models\Announcement::factory()->create();
-//    $announcement->publish();
-//
-//    $user = App\Models\User::factory()->create();
-//
-//    $this->actingAs($user)
-//        ->get(route('announcements.edit', $announcement))
-//        ->assertForbidden();
-//
-//    seed(RoleSeeder::class);
-//
-//    $admin = App\Models\User::factory()->create();
-//    $admin->assignRole(Role::firstWhere('name', 'admin'));
-//
-//    $this->actingAs($admin)
-//        ->get(route('announcements.edit', $announcement))
-//        ->assertForbidden();
-//});
+it('prevents user from editing announcement with too long title', function () {
+    $announcement = Announcement::factory()->unpublished()->create();
 
-//it('allows user to edit unpublished announcement', function () {
-//    $announcement = Announcement::create([
-//        'title' => 'title',
-//        'content' => 'content',
-//        'publish_at' => now()->addDay(),
-//    ]);
-//
-//    // TODO: this should get moved to AnnouncementControllerTest
-//    $this->actingAs(User::factory()->create())
-//        ->get(route('announcements.edit', $announcement))
-//        ->assertOk();
-//
-//    $updates = [
-//        'title' => 'new title',
-//        'content' => 'new content',
-//        'publish_at' => now()->addWeek(),
-//    ];
-//
-//    livewire('announcements.edit', ['announcement' => $announcement])
-//        ->set('title', $updates['title'])
-//        ->set('content', $updates['content'])
-//        ->set('publish_at', $updates['publish_at'])
-//        ->call('submit')
-//        ->assertRedirect(route('announcements.index'));
-//
-//    $this->assertDatabaseHas('announcements', $updates);
-//});
+    $updates = [
+        'title' => str_repeat('a', 256),
+        'content' => 'new content',
+        'publish_at' => now()->addWeek(),
+    ];
+
+    livewire('announcements.edit-announcement', ['announcement' => $announcement])
+        ->set('title', $updates['title'])
+        ->set('content', $updates['content'])
+        ->set('publish_at', $updates['publish_at'])
+        ->call('submit')
+        ->assertHasErrors(['title' => 'max']);
+
+    $this->assertDatabaseMissing('announcements', $updates);
+});
+
+it('prevents user from editing announcement with too long content', function () {
+    $announcement = Announcement::factory()->unpublished()->create();
+
+    $updates = [
+        'title' => 'new title',
+        'content' => str_repeat('a', 65536),
+        'publish_at' => now()->addWeek(),
+    ];
+
+    livewire('announcements.edit-announcement', ['announcement' => $announcement])
+        ->set('title', $updates['title'])
+        ->set('content', $updates['content'])
+        ->set('publish_at', $updates['publish_at'])
+        ->call('submit')
+        ->assertHasErrors(['content' => 'max']);
+
+    $this->assertDatabaseMissing('announcements', $updates);
+});
+
+it('prevents user from editing announcement with publish_at in the past', function () {
+    $announcement = Announcement::factory()->unpublished()->create();
+
+    $updates = [
+        'title' => 'new title',
+        'content' => 'new content',
+        'publish_at' => now()->subWeek(),
+    ];
+
+    livewire('announcements.edit-announcement', ['announcement' => $announcement])
+        ->set('title', $updates['title'])
+        ->set('content', $updates['content'])
+        ->set('publish_at', $updates['publish_at'])
+        ->call('submit')
+        ->assertHasErrors(['publish_at' => 'after_or_equal']);
+
+    $this->assertDatabaseMissing('announcements', $updates);
+});

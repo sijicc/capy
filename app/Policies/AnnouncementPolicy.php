@@ -17,6 +17,15 @@ class AnnouncementPolicy
 
     public function view(User $user, Announcement $announcement): bool
     {
+        if ($announcement->isNotPublished()) {
+            if ($user->id === $announcement->user_id) {
+                return true;
+            }
+            if ($user->can('announcements:viewAny')) {
+                return true;
+            }
+            return false;
+        }
         return $user->can('announcements:view');
     }
 
@@ -27,6 +36,15 @@ class AnnouncementPolicy
 
     public function update(User $user, Announcement $announcement): bool
     {
+        if ($announcement->isPublished()) {
+            return false;
+        }
+
         return $user->can('announcements:update');
+    }
+
+    public function delete(User $user, Announcement $announcement): bool
+    {
+        return $user->can('announcements:delete');
     }
 }

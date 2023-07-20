@@ -39,6 +39,16 @@ class Announcement extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function isPublished(): bool
+    {
+        return $this->published_at !== null;
+    }
+
+    public function isNotPublished(): bool
+    {
+        return !$this->isPublished();
+    }
+
     public function readers(): BelongsToMany
     {
         return $this->belongsToMany(User::class,

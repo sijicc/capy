@@ -28,4 +28,22 @@ class AnnouncementFactory extends Factory
             'user_id' => User::factory(),
         ];
     }
+
+    public function published(): self
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'published_at' => $this->faker->dateTimeBetween('-1 week', '-1 day'),
+            ];
+        });
+    }
+
+    public function unpublished(): self
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'published_at' => null,
+            ];
+        });
+    }
 }
