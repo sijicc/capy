@@ -18,6 +18,7 @@
         "filament/tables": "^2.0",
         "gehrisandro/tailwind-merge-laravel": "^0.1.0",
         "guzzlehttp/guzzle": "^7.2",
+        "haydenpierce/class-finder": "^0.5.3",
         "laravel/fortify": "^1.16",
         "laravel/framework": "^10.0",
         "laravel/sanctum": "^3.2",

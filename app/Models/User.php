@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\TemplatingEngine\AllowsToGenerateForm;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -9,7 +10,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable
+class User extends Authenticatable implements AllowsToGenerateForm
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
@@ -45,5 +46,16 @@ class User extends Authenticatable
             foreignPivotKey: 'user_id',
             relatedPivotKey: 'announcement_id'
         )->withPivot('read_at');
+    }
+
+    public static function getFields(): array
+    {
+        return [
+            'name',
+            'email',
+            'email_verified_at',
+            'created_at',
+            'updated_at',
+        ];
     }
 }

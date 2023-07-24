@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f5a1863749af6e323e16f76c2d111b65",
+    "content-hash": "fc30ab496dafe434c077a760e15229a3",
     "packages": [
         {
             "name": "akaunting/laravel-money",
@@ -2086,6 +2086,48 @@
                 }
             ],
             "time": "2021-10-07T12:57:01+00:00"
+        },
+        {
+            "name": "haydenpierce/class-finder",
+            "version": "0.5.3",
+            "source": {
+                "type": "git",
+                "url": "git@gitlab.com:hpierce1102/ClassFinder.git",
+                "reference": "40703445c18784edcc6411703e7c3869af11ec8c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://gitlab.com/api/v4/projects/hpierce1102%2FClassFinder/repository/archive.zip?sha=40703445c18784edcc6411703e7c3869af11ec8c",
+                "reference": "40703445c18784edcc6411703e7c3869af11ec8c",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "php": ">=5.3"
+            },
+            "require-dev": {
+                "mikey179/vfsstream": "^1.6",
+                "phpunit/phpunit": "~9.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "HaydenPierce\\ClassFinder\\": "src/",
+                    "HaydenPierce\\ClassFinder\\UnitTest\\": "test/unit"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Hayden Pierce",
+                    "email": "hayden@haydenpierce.com"
+                }
+            ],
+            "description": "A library that can provide of a list of classes in a given namespace",
+            "time": "2023-06-18T17:43:01+00:00"
         },
         {
             "name": "laravel/fortify",
@@ -9027,16 +9069,16 @@
         },
         {
             "name": "pestphp/pest",
-            "version": "v2.9.1",
+            "version": "v2.9.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pestphp/pest.git",
-                "reference": "9100913184cf8cc0877ec81f883451c421ad85de"
+                "reference": "cf5275293fe693ec2cf4dbadbadae01daaa08169"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pestphp/pest/zipball/9100913184cf8cc0877ec81f883451c421ad85de",
-                "reference": "9100913184cf8cc0877ec81f883451c421ad85de",
+                "url": "https://api.github.com/repos/pestphp/pest/zipball/cf5275293fe693ec2cf4dbadbadae01daaa08169",
+                "reference": "cf5275293fe693ec2cf4dbadbadae01daaa08169",
                 "shasum": ""
             },
             "require": {
@@ -9112,7 +9154,7 @@
             ],
             "support": {
                 "issues": "https://github.com/pestphp/pest/issues",
-                "source": "https://github.com/pestphp/pest/tree/v2.9.1"
+                "source": "https://github.com/pestphp/pest/tree/v2.9.3"
             },
             "funding": [
                 {
@@ -9124,7 +9166,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-07-20T12:39:17+00:00"
+            "time": "2023-07-20T18:47:23+00:00"
         },
         {
             "name": "pestphp/pest-plugin",
