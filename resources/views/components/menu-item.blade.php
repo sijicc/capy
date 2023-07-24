@@ -20,7 +20,7 @@
             </span>
             <br />
         </span>
-        <ul class="pl-4" x-show="open" x-collapse>
+        <ul class="pl-4" x-show="open" x-collapse x-cloak>
             @foreach ($children as $menuItem)
                 {!! $menuItem->render() !!}
             @endforeach
@@ -28,7 +28,7 @@
     </li>
 @else
     <li>
-        <a class="{{ twMerge($classes) }}" href="{{ $href }}">
+        <a class="{{ twMerge($classes) }}" href="{{ $href }}" wire:navigate>
             @if (isset($icon))
                 @svg($icon, 'h-5 w-5')
             @endif

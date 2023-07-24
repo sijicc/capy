@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\UserController;
+use App\Models\Announcement;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,4 +30,15 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('roles', RoleController::class);
         Route::resource('settings', SettingController::class);
     });
+});
+
+Route::get('/fire', function () {
+    Announcement::create([
+        'title' => 'Test Announcement',
+        'content' => 'This is a test announcement.',
+        'should_notify' => true,
+        'should_email' => true,
+        'publish_at' => now(),
+        'user_id' => auth()->user()->id,
+    ])->publish();
 });

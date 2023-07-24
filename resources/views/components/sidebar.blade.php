@@ -1,4 +1,4 @@
-<div class="absolute z-40 flex h-screen" x-show="sidebarOpen" x-cloak>
+<div class="absolute z-40 flex h-screen" x-show="sidebarOpen">
     <div class="relative flex w-64 flex-shrink-0 flex-col border-r bg-white">
         <button
             @click="sidebarOpen = !sidebarOpen"

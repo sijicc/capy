@@ -9,7 +9,7 @@
         @filamentStyles
         @vite("resources/css/app.css")
     </head>
-    <body class="antialiased" x-data="{ sidebarOpen: false }">
+    <body class="antialiased" x-data="{ sidebarOpen: $persist(false) }">
         <x-sidebar />
 
         <div class="flex w-full items-center justify-between px-6 lg:px-8">
@@ -27,6 +27,7 @@
                         <li>
                             <a
                                 href="{{ $item->url }}"
+                                wire:navigate
                                 @class([
                                     "text-gray-900" => $loop->last,
                                     "font-medium text-gray-500 transition-colors duration-150 hover:text-gray-700" => ! $loop->last,
@@ -43,7 +44,7 @@
                     @endforeach
                 </ul>
             </div>
-            <livewire:notifications-bell />
+            <x-notifications.bell />
         </div>
 
         <main
@@ -55,5 +56,6 @@
         @filamentScripts
         @vite("resources/js/app.js")
         @livewire("notifications")
+        @livewire("database-notifications")
     </body>
 </html>

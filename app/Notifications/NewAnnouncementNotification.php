@@ -4,7 +4,10 @@ namespace App\Notifications;
 
 use App\Mail\NewAnnouncementMail;
 use App\Models\Announcement;
+use App\Models\User;
 use Exception;
+use Filament\Notifications\Actions\Action;
+use Filament\Notifications\Events\DatabaseNotificationsSent;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\BroadcastMessage;
@@ -18,7 +21,8 @@ class NewAnnouncementNotification extends Notification implements ShouldQueue
 
     public function __construct(
         public Announcement $announcement,
-    ) {
+    )
+    {
         $this->message = __('notifications.new_announcement', [
             'user' => $this->announcement->user->name,
             'title' => $this->announcement->title,
@@ -40,18 +44,20 @@ class NewAnnouncementNotification extends Notification implements ShouldQueue
             $via[] = 'broadcast';
         }
 
-        if (count($via) === 0) {
-            throw new Exception('No notification methods selected.');
-        }
-
         return $via;
     }
 
-    public function toBroadcast($notifiable): BroadcastMessage
+    public function toBroadcast(User $notifiable): BroadcastMessage
     {
-        return new BroadcastMessage([
-            'message' => $this->message,
-        ]);
+        event(new DatabaseNotificationsSent($notifiable));
+        return \Filament\Notifications\Notification::make()
+            ->info()
+            ->title($this->message)
+            ->actions([
+                Action::make('view')
+                    ->url(route('announcements.show', $this->announcement)),
+            ])
+            ->getBroadcastMessage();
     }
 
     public function toArray($notifiable): array
@@ -61,6 +67,18 @@ class NewAnnouncementNotification extends Notification implements ShouldQueue
             'message' => $this->message,
             'body' => $this->announcement->content,
         ];
+    }
+
+    public function toDatabase(): array
+    {
+        return \Filament\Notifications\Notification::make()
+            ->info()
+            ->title($this->message)
+            ->actions([
+                Action::make('view')
+                    ->url(route('announcements.show', $this->announcement)),
+            ])
+            ->getDatabaseMessage();
     }
 
     public function toMail($notifiable): NewAnnouncementMail
