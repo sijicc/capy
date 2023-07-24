@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Livewire\Users\Edit;
+use App\Livewire\Users\Edit;
 use App\Models\User;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use function Pest\Laravel\actingAs;

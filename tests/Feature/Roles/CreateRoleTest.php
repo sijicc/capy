@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Livewire\Roles\CreateRole;
+use App\Livewire\Roles\CreateRole;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use function Pest\Laravel\get;

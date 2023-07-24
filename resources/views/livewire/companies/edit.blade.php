@@ -14,7 +14,7 @@
         </div>
     </x-slot:header>
 
-    <form method="post" wire:submit.prevent="update">
+    <form method="post" wire:submit="update">
         @csrf
         <div>
             <div class="my-6">
@@ -30,22 +30,22 @@
 
             <div class="mb-6">
                 <x-forms.label for="name" class="required" :value="__('Name')"/>
-                <x-forms.input name="name" type="text" wire:model.defer="company.name" required/>
+                <x-forms.input name="name" type="text" wire:model="company.name" required/>
             </div>
 
             <div class="mb-6">
                 <x-forms.label for="nip" class="required" :value="__('NIP')"/>
-                <x-forms.input name="nip" type="text" wire:model.defer="company.nip" required/>
+                <x-forms.input name="nip" type="text" wire:model="company.nip" required/>
             </div>
 
             <div class="mb-6">
                 <x-forms.label for="regon" class="required" :value="__('REGON')"/>
-                <x-forms.input name="regon" type="text" wire:model.defer="company.regon" required/>
+                <x-forms.input name="regon" type="text" wire:model="company.regon" required/>
             </div>
 
             <div class="mb-6">
                 <x-forms.label for="krs" :value="__('KRS')"/>
-                <x-forms.input name="krs" type="text" wire:model.defer="company.krs"/>
+                <x-forms.input name="krs" type="text" wire:model="company.krs"/>
             </div>
 
             <div class="border-t border-gray-200"></div>
@@ -62,7 +62,7 @@
 
             <div class="mb-6">
                 <x-forms.label for="country_id" :value="__('Country')"/>
-                <x-forms.select name="country_id" type="text" wire:model.defer="company.address.country_id"
+                <x-forms.select name="country_id" type="text" wire:model="company.address.country_id"
                                 :options="$this->countries()"/>
             </div>
 
@@ -72,22 +72,22 @@
                     {{ __('For example: voivodeship, state, province, etc.') }}
                 </x-forms.info>
                 <x-forms.input name="administrative_area" type="text"
-                               wire:model.defer="company.address.administrative_area"/>
+                               wire:model="company.address.administrative_area"/>
             </div>
 
             <div class="mb-6">
                 <x-forms.label for="city" :value="__('City')"/>
-                <x-forms.input name="city" type="text" wire:model.defer="company.address.city"/>
+                <x-forms.input name="city" type="text" wire:model="company.address.city"/>
             </div>
 
             <div class="mb-6">
                 <x-forms.label for="zip" :value="__('Postal code')"/>
-                <x-forms.input name="zip" type="text" wire:model.defer="company.address.zip"/>
+                <x-forms.input name="zip" type="text" wire:model="company.address.zip"/>
             </div>
 
             <div class="mb-6">
                 <x-forms.label for="street" :value="__('Street')"/>
-                <x-forms.input name="street" type="text" wire:model.defer="company.address.street"/>
+                <x-forms.input name="street" type="text" wire:model="company.address.street"/>
             </div>
 
             <div class="border-t border-gray-200"></div>
@@ -105,7 +105,7 @@
             <div class="mb-6">
                 <x-forms.label for="country_id" :value="__('Country')"/>
                 <x-forms.select name="country_id" type="text"
-                                wire:model.defer="company.correspondenceAddress.country_id"
+                                wire:model="company.correspondenceAddress.country_id"
                                 :options="$this->countries()"/>
             </div>
 
@@ -115,22 +115,22 @@
                     {{ __('For example: voivodeship, state, province, etc.') }}
                 </x-forms.info>
                 <x-forms.input name="administrative_area" type="text"
-                               wire:model.defer="company.correspondenceAddress.administrative_area"/>
+                               wire:model="company.correspondenceAddress.administrative_area"/>
             </div>
 
             <div class="mb-6">
                 <x-forms.label for="city" :value="__('City')"/>
-                <x-forms.input name="city" type="text" wire:model.defer="company.correspondenceAddress.city"/>
+                <x-forms.input name="city" type="text" wire:model="company.correspondenceAddress.city"/>
             </div>
 
             <div class="mb-6">
                 <x-forms.label for="zip" :value="__('Postal code')"/>
-                <x-forms.input name="zip" type="text" wire:model.defer="company.correspondenceAddress.zip"/>
+                <x-forms.input name="zip" type="text" wire:model="company.correspondenceAddress.zip"/>
             </div>
 
             <div class="mb-6">
                 <x-forms.label for="street" :value="__('Street')"/>
-                <x-forms.input name="street" type="text" wire:model.defer="company.correspondenceAddress.street"/>
+                <x-forms.input name="street" type="text" wire:model="company.correspondenceAddress.street"/>
             </div>
 
         </div>

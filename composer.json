@@ -9,13 +9,13 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
-        "blade-ui-kit/blade-heroicons": "^1.4",
+        "blade-ui-kit/blade-heroicons": "^2.0.0",
         "blade-ui-kit/blade-icons": "^1.5",
         "cknow/laravel-money": "^7.1",
         "diglactic/laravel-breadcrumbs": "^8.1",
-        "filament/forms": "^2.0",
-        "filament/notifications": "^2.0",
-        "filament/tables": "^2.0",
+        "filament/forms": "^3.0@beta",
+        "filament/notifications": "^3.0@beta",
+        "filament/tables": "^3.0@beta",
         "gehrisandro/tailwind-merge-laravel": "^0.1.0",
         "guzzlehttp/guzzle": "^7.2",
         "haydenpierce/class-finder": "^0.5.3",
@@ -23,7 +23,7 @@
         "laravel/framework": "^10.0",
         "laravel/sanctum": "^3.2",
         "laravel/tinker": "^2.8",
-        "livewire/livewire": "^2.12",
+        "livewire/livewire": "^3.0@beta",
         "maatwebsite/excel": "^3.1",
         "pusher/pusher-php-server": "^7.2",
         "spatie/laravel-data": "^3.2",
@@ -31,6 +31,7 @@
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
+        "filament/upgrade": "^3.0",
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.18",
         "mockery/mockery": "^1.4.4",
@@ -56,7 +57,8 @@
     "scripts": {
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover --ansi"
+            "@php artisan package:discover --ansi",
+            "@php artisan filament:upgrade"
         ],
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
@@ -82,6 +84,6 @@
             "php-http/discovery": true
         }
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "prefer-stable": true
 }

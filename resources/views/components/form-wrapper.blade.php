@@ -13,7 +13,7 @@
             </div>
         </div>
     </x-slot>
-    <form wire:submit.prevent="submit">
+    <form wire:submit="submit">
         {{ $slot }}
 
         <div class="mt-3">

@@ -28,7 +28,7 @@ class Sidebar extends Component
             new MenuItem(
                 href: route('companies.index'),
                 title: 'Companies',
-                icon: 'heroicon-s-office-building',
+                icon: 'heroicon-m-building-office',
                 active: request()->routeIs('companies.*'),
             ),
             new MenuItem(
@@ -53,7 +53,7 @@ class Sidebar extends Component
                     new MenuItem(
                         href: route('roles.index'),
                         title: 'Roles',
-                        icon: 'heroicon-s-badge-check',
+                        icon: 'heroicon-m-check-badge',
                         active: request()->routeIs('roles.*'),
                     ),
                     new MenuItem(

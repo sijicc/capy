@@ -6,15 +6,13 @@
 
         <title>{{ Breadcrumbs::generate()->pluck("title")->implode(" / ") ." | " . config("app.name") }}</title>
 
-        @vite(["resources/css/app.css", "resources/js/app.js"])
-        @stack("head")
-        @livewireStyles
-        @livewireScripts
+        @filamentStyles
+        @vite("resources/css/app.css")
     </head>
     <body class="antialiased" x-data="{ sidebarOpen: false }">
         <x-sidebar />
 
-        <div :class="sidebarOpen ? 'md:ml-64' : ''" class="flex w-full items-center justify-between px-6 lg:px-8">
+        <div class="flex w-full items-center justify-between px-6 lg:px-8">
             <div class="flex items-center">
                 <button
                     id="sidebar-toggle"
@@ -22,7 +20,7 @@
                     x-cloak
                     class="text-gray-500 transition-colors duration-150 hover:text-gray-800"
                 >
-                    @svg('heroicon-s-menu', 'h-6 w-6')
+                    @svg('heroicon-s-bars-3', 'h-6 w-6')
                 </button>
                 <ul class="my-4 flex items-center space-x-2 pl-4 text-sm font-medium text-gray-500">
                     @foreach (Breadcrumbs::generate() as $item)
@@ -54,7 +52,8 @@
         >
             {{ $slot }}
         </main>
-        @stack("scripts")
+        @filamentScripts
+        @vite("resources/js/app.js")
         @livewire("notifications")
     </body>
 </html>

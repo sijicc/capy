@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Livewire\Companies\Edit;
+use App\Livewire\Companies\Edit;
 use App\Models\Company;
 use App\Models\User;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;

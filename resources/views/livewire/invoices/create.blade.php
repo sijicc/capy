@@ -1,4 +1,5 @@
-<x-card class="min-h-screen" x-data="{invoice: @entangle('invoice')}">
+@php use App\Enums\InvoiceType; @endphp
+<x-card class="min-h-screen" x-data="{invoice: @entangle('invoice').live}">
     <x-slot:header>
         <div class="flex justify-between">
             <div>
@@ -13,7 +14,7 @@
             </div>
         </div>
     </x-slot:header>
-    <form method="post" wire:submit.prevent="store">
+    <form method="post" wire:submit="store">
         @csrf
         <div class="flex justify-content-between">
             <div class="mb-6">
@@ -21,14 +22,14 @@
                 <x-forms.info class="mb-2">
                     {{ __('The number of the invoice. It will be generated automatically. ') }}
                 </x-forms.info>
-                <x-forms.input name="invoice.number" type="text" wire:model.defer="invoice.number" disabled/>
+                <x-forms.input name="invoice.number" type="text" wire:model="invoice.number" disabled/>
             </div>
             <div class="mb-6 flex flex-col items-bottom align-bottom">
                 <x-forms.label for="invoice.invoice_number_template_id" class="required"
                                :value="__('Number template')"/>
                 <x-forms.select
                     name="invoice.invoice_number_template_id"
-                    wire:model.lazy="invoice.invoice_number_template_id"
+                    wire:model.blur="invoice.invoice_number_template_id"
                     :options="$this->getInvoiceNumberTemplates()"
                     required
                 />
@@ -38,8 +39,8 @@
             <x-forms.label for="invoice.type" class="required" :value="__('Type')"/>
             <x-forms.select
                 name="invoice.type"
-                wire:model.lazy="invoice.type"
-                :options="\App\Enums\InvoiceType::asCollection()"
+                wire:model.blur="invoice.type"
+                :options="InvoiceType::asCollection()"
                 required
             />
     </form>
