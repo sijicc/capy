@@ -50,6 +50,7 @@ class NewAnnouncementNotification extends Notification implements ShouldQueue
     public function toBroadcast(User $notifiable): BroadcastMessage
     {
         event(new DatabaseNotificationsSent($notifiable));
+
         return \Filament\Notifications\Notification::make()
             ->info()
             ->title($this->message)

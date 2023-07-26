@@ -1,6 +1,6 @@
 <?php
 
-use App\Livewire\Users\Edit;
+use App\Livewire\Users\EditUser;
 use App\Models\User;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use function Pest\Laravel\actingAs;
@@ -13,6 +13,7 @@ beforeEach(function () {
     $this->seed();
 });
 
+// TOOD: This belongs in UserControllerTest
 it('doesn\'t allow guest to edit user', function () {
     get(route('users.edit', User::factory()->create()))
         ->assertRedirect(route('login'));
@@ -28,11 +29,11 @@ it('allows user to edit user with correct data', function () {
         'email' => 'johndoe@example.com',
     ];
 
-    livewire(Edit::class, ['user' => $user->getAttributes()])
+    livewire(EditUser::class, ['user' => $user->getAttributes()])
         ->set('user.name', $changes['name'])
         ->set('user.email', $changes['email'])
         ->set('user.password', 'Password123!')
-        ->call('update')
+        ->call('submit')
         ->assertRedirect(route('users.show', $user));
 
     $this->assertDatabaseHas('users', $changes);
@@ -51,10 +52,10 @@ it('doesn\'t change user password if it\'s not provided', function () {
         'email' => 'johndoe@example.com',
     ];
 
-    livewire(Edit::class, ['user' => $user->getAttributes()])
+    livewire(EditUser::class, ['user' => $user->getAttributes()])
         ->set('user.name', $changes['name'])
         ->set('user.email', $changes['email'])
-        ->call('update')
+        ->call('submit')
         ->assertRedirect(route('users.show', $user));
 
     $this->assertDatabaseHas('users', $changes);
@@ -72,11 +73,11 @@ it('doesn\'t allow user to edit user with incorrect data', function () {
         'email' => 'invalidemail',
     ];
 
-    livewire(Edit::class, ['user' => $user->getAttributes()])
+    livewire(EditUser::class, ['user' => $user->getAttributes()])
         ->set('user.name', $changes['name'])
         ->set('user.email', $changes['email'])
         ->set('user.password', 'invalidpassword')
-        ->call('update')
+        ->call('submit')
         ->assertHasErrors(['email', 'password']);
 
     $this->assertDatabaseMissing('users', $changes);

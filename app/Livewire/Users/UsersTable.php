@@ -58,6 +58,7 @@ class UsersTable extends Component implements HasTable, HasForms
     protected function getTableActions(): array
     {
         $userPolicy = new UserPolicy();
+
         return [
             ActionGroup::make([
                 Action::make('view')
@@ -74,7 +75,7 @@ class UsersTable extends Component implements HasTable, HasForms
                     ->visible(fn(User $record): bool => $userPolicy->delete(auth()->user(), $record))
                     ->action(fn(User $record): bool => $record->delete())
                     ->requiresConfirmation(),
-            ])
+            ]),
         ];
     }
 

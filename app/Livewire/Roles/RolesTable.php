@@ -27,7 +27,7 @@ class RolesTable extends Component implements HasTable, HasForms
                     ->sortable()
                     ->description(fn(Role $record) => $record->description)
                     ->label('Name')
-                    ->searchable()
+                    ->searchable(),
             ])
             ->actions([
                 Tables\Actions\Action::make('delete')

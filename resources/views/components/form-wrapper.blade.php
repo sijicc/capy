@@ -1,18 +1,26 @@
 <x-card class="min-h-screen" footer-class="flex justify-end">
-    <x-slot name="header">
-        <div class="flex justify-between">
-            <div>
-                <h3 class="text-lg font-medium leading-6 text-gray-900">
-                    {{ $heading }}
-                </h3>
-                <div class="mt-1 max-w-2xl text-sm text-gray-500">
-                    <p>
-                        {{ $subheading }}
-                    </p>
+    @if (isset($heading) || isset($subheading))
+        <x-slot name="header">
+            <div class="flex justify-between">
+                <div>
+                    @if (isset($heading))
+                        <h3 class="text-lg font-medium leading-6 text-gray-900">
+                            {{ $heading }}
+                        </h3>
+                    @endif
+
+                    @if (isset($subheading))
+                        <div class="mt-1 max-w-2xl text-sm text-gray-500">
+                            <p>
+                                {{ $subheading }}
+                            </p>
+                        </div>
+                    @endif
                 </div>
             </div>
-        </div>
-    </x-slot>
+        </x-slot>
+    @endif
+
     <form wire:submit="submit">
         {{ $slot }}
 

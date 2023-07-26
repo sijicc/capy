@@ -21,6 +21,7 @@ class Table extends Component implements HasTable, HasForms
     public function table(Tables\Table $table): Tables\Table
     {
         $companyPolicy = new CompanyPolicy();
+
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('id')->searchable()->sortable(),
