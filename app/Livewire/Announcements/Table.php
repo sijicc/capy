@@ -33,12 +33,12 @@ class Table extends Component implements HasTable, HasForms
                 Tables\Columns\TextColumn::make('created_at')->badge()->color('gray')->sortable(),
                 Tables\Columns\TextColumn::make('updated_at')->badge()->color('gray')->sortable(),
             ])
-            ->query(fn() => Announcement::query())
+            ->query(fn () => Announcement::query())
             ->actions([
                 Tables\Actions\ActionGroup::make([
                     Tables\Actions\Action::make('show')
                         ->icon('heroicon-o-eye')
-                        ->url(fn(Announcement $record): string => route('announcements.show', $record))
+                        ->url(fn (Announcement $record): string => route('announcements.show', $record))
                         ->openUrlInNewTab(),
                     Tables\Actions\Action::make('publish')
                         ->icon('heroicon-o-envelope')
@@ -49,28 +49,28 @@ class Table extends Component implements HasTable, HasForms
                                 ->send();
                             $record->publish();
                         })
-                        ->visible(fn(Announcement $record): bool => $record->isNotPublished())
+                        ->visible(fn (Announcement $record): bool => $record->isNotPublished())
                         ->requiresConfirmation(),
                     Tables\Actions\Action::make('edit')
                         ->icon('heroicon-o-pencil')
-                        ->url(fn(Announcement $record): string => route('announcements.edit', $record))
-                        ->visible(fn(Announcement $record): bool => $record->isNotPublished()),
+                        ->url(fn (Announcement $record): string => route('announcements.edit', $record))
+                        ->visible(fn (Announcement $record): bool => $record->isNotPublished()),
                     Tables\Actions\Action::make('delete')
                         ->icon('heroicon-o-trash')
-                        ->action(fn(Announcement $record): bool => $record->delete())
-                        ->visible(fn(Announcement $record): bool => $record->isNotPublished())
+                        ->action(fn (Announcement $record): bool => $record->delete())
+                        ->visible(fn (Announcement $record): bool => $record->isNotPublished())
                         ->requiresConfirmation(),
                 ]),
             ])
             ->filters([
                 Tables\Filters\Filter::make('should_notify')
-                    ->query(fn(Builder $query): Builder => $query->where('should_notify', true)),
+                    ->query(fn (Builder $query): Builder => $query->where('should_notify', true)),
                 Tables\Filters\Filter::make('should_email')
-                    ->query(fn(Builder $query): Builder => $query->where('should_email', true)),
+                    ->query(fn (Builder $query): Builder => $query->where('should_email', true)),
                 Tables\Filters\Filter::make('published')
-                    ->query(fn(Builder $query): Builder => $query->published()),
+                    ->query(fn (Builder $query): Builder => $query->published()),
                 Tables\Filters\Filter::make('unpublished')
-                    ->query(fn(Builder $query): Builder => $query->unpublished()),
+                    ->query(fn (Builder $query): Builder => $query->unpublished()),
                 Tables\Filters\Filter::make('published_at')
                     ->form([
                         Forms\Components\DateTimePicker::make('published_from'),
@@ -80,11 +80,11 @@ class Table extends Component implements HasTable, HasForms
                         return $query
                             ->when(
                                 $data['published_from'],
-                                fn(Builder $query, $publishedFrom): Builder => $query->where('published_at', '>=', $publishedFrom)
+                                fn (Builder $query, $publishedFrom): Builder => $query->where('published_at', '>=', $publishedFrom)
                             )
                             ->when(
                                 $data['published_to'],
-                                fn(Builder $query, $publishedTo): Builder => $query->where('published_at', '<=', $publishedTo)
+                                fn (Builder $query, $publishedTo): Builder => $query->where('published_at', '<=', $publishedTo)
                             );
                     }),
             ]);

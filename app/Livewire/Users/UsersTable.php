@@ -63,17 +63,17 @@ class UsersTable extends Component implements HasTable, HasForms
             ActionGroup::make([
                 Action::make('view')
                     ->icon('heroicon-o-eye')
-                    ->visible(fn(User $record): bool => $userPolicy->view(auth()->user(), $record))
-                    ->url(fn(User $record): string => route('users.show', $record)),
+                    ->visible(fn (User $record): bool => $userPolicy->view(auth()->user(), $record))
+                    ->url(fn (User $record): string => route('users.show', $record)),
                 Action::make('edit')
                     ->icon('heroicon-o-pencil')
-                    ->visible(fn(User $record): bool => $userPolicy->update(auth()->user(), $record))
-                    ->url(fn(User $record): string => route('users.edit', $record)),
+                    ->visible(fn (User $record): bool => $userPolicy->update(auth()->user(), $record))
+                    ->url(fn (User $record): string => route('users.edit', $record)),
                 Action::make('delete')
                     ->icon('heroicon-o-trash')
                     ->color('danger')
-                    ->visible(fn(User $record): bool => $userPolicy->delete(auth()->user(), $record))
-                    ->action(fn(User $record): bool => $record->delete())
+                    ->visible(fn (User $record): bool => $userPolicy->delete(auth()->user(), $record))
+                    ->action(fn (User $record): bool => $record->delete())
                     ->requiresConfirmation(),
             ]),
         ];

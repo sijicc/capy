@@ -24,7 +24,7 @@ class EditRole
     protected function validate(array $user, Role $role): array
     {
         return Validator::make($user, [
-            'name' => ['required', 'string', 'max:255', 'unique:roles,name,' . $role->id],
+            'name' => ['required', 'string', 'max:255', 'unique:roles,name,'.$role->id],
             'pretty_name' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string', 'max:255'],
             'permissions' => ['array', 'nullable'],

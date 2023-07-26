@@ -5,8 +5,8 @@ use Database\Seeders\AnnouncementSeeder;
 use Database\Seeders\PermissionSeeder;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Spatie\Permission\Models\Role;
 use function Pest\Laravel\seed;
+use Spatie\Permission\Models\Role;
 
 uses(RefreshDatabase::class);
 

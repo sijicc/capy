@@ -21,8 +21,7 @@ class NewAnnouncementNotification extends Notification implements ShouldQueue
 
     public function __construct(
         public Announcement $announcement,
-    )
-    {
+    ) {
         $this->message = __('notifications.new_announcement', [
             'user' => $this->announcement->user->name,
             'title' => $this->announcement->title,

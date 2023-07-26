@@ -11,7 +11,8 @@ readonly class CreateCompany
 {
     public function __construct(
         public CreateAddress $createAddress = new CreateAddress(),
-    ) {
+    )
+    {
     }
 
     public function handle(array $company): Company
@@ -35,7 +36,7 @@ readonly class CreateCompany
             'nip' => ['required', new NipRule(), 'unique:companies,nip'],
             'regon' => ['required', new RegonRule(), 'unique:companies,regon'],
             'krs' => ['max:10', 'nullable'],
-            'website' => ['nullable', 'url'],
+            'website' => ['url', 'nullable'],
         ])->validate();
     }
 }

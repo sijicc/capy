@@ -50,7 +50,7 @@ it('doesn\'t allow user to create address with invalid country', function () {
         'street' => 'ul. Testowa 1',
     ];
 
-    $this->expect(fn() => (new CreateAddress())->handle($address))->toThrow(ValidationException::class);
+    $this->expect(fn () => (new CreateAddress())->handle($address))->toThrow(ValidationException::class);
     $this->assertDatabaseMissing('addresses', $address);
 });
 
@@ -93,7 +93,7 @@ it('doesn\'t allow user to edit address with invalid data', function () {
 
     $addressData['country_id'] = -1;
 
-    $this->expect(fn() => (new EditAddress())->handle($address, $addressData))->toThrow(ValidationException::class);
+    $this->expect(fn () => (new EditAddress())->handle($address, $addressData))->toThrow(ValidationException::class);
 
     $this->assertDatabaseMissing('addresses', $addressData);
     $addressData['country_id'] = 4;

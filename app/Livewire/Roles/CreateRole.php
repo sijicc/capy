@@ -53,7 +53,7 @@ class CreateRole extends Component implements Forms\Contracts\HasForms
 
     private function getPermissions(): array
     {
-        $groups = Permission::all()->groupBy(fn($permission) => explode(':', $permission->name)[0]);
+        $groups = Permission::all()->groupBy(fn ($permission) => explode(':', $permission->name)[0]);
         $checkboxLists = [];
         foreach ($groups as $groupName => $group) {
             $checkboxLists[] = Forms\Components\CheckboxList::make('permissions')

@@ -47,7 +47,7 @@ class Announcement extends Model
 
     public function isNotPublished(): bool
     {
-        return !$this->isPublished();
+        return ! $this->isPublished();
     }
 
     public function scopePublished(Builder $query): Builder

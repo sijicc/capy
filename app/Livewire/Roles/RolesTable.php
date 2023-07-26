@@ -21,11 +21,11 @@ class RolesTable extends Component implements HasTable, HasForms
         $rolePolicy = new RolePolicy();
 
         return $table
-            ->query(fn() => Role::query())
+            ->query(fn () => Role::query())
             ->columns([
                 Tables\Columns\TextColumn::make('pretty_name')
                     ->sortable()
-                    ->description(fn(Role $record) => $record->description)
+                    ->description(fn (Role $record) => $record->description)
                     ->label('Name')
                     ->searchable(),
             ])
@@ -33,14 +33,14 @@ class RolesTable extends Component implements HasTable, HasForms
                 Tables\Actions\Action::make('delete')
                     ->color('danger')
                     ->icon('heroicon-o-trash')
-                    ->visible(fn(Role $record) => $rolePolicy->delete(auth()->user(), $record))
-                    ->action(fn(Role $record) => $record->delete())
+                    ->visible(fn (Role $record) => $rolePolicy->delete(auth()->user(), $record))
+                    ->action(fn (Role $record) => $record->delete())
                     ->requiresConfirmation(),
                 Tables\Actions\Action::make('edit')
                     ->color('primary')
                     ->icon('heroicon-o-pencil')
-                    ->visible(fn(Role $record) => $rolePolicy->update(auth()->user(), $record))
-                    ->url(fn(Role $record) => route('roles.edit', $record)),
+                    ->visible(fn (Role $record) => $rolePolicy->update(auth()->user(), $record))
+                    ->url(fn (Role $record) => route('roles.edit', $record)),
             ]);
     }
 }
