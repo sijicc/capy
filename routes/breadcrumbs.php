@@ -27,7 +27,7 @@ Breadcrumbs::for('companies.show', function (BreadcrumbTrail $trail, Company $co
 
 Breadcrumbs::for('companies.edit', function (BreadcrumbTrail $trail, Company $company) {
     $trail->parent('companies.show', $company);
-    $trail->push("Edit {$company->name}", route('companies.edit', $company));
+    $trail->push("Edit", route('companies.edit', $company));
 });
 
 Breadcrumbs::for('users.index', function (BreadcrumbTrail $trail) {
@@ -46,7 +46,7 @@ Breadcrumbs::for('users.show', function (BreadcrumbTrail $trail, User $user) {
 
 Breadcrumbs::for('users.edit', function (BreadcrumbTrail $trail, User $user) {
     $trail->parent('users.show', $user);
-    $trail->push("Edit {$user->name}", route('users.edit', $user));
+    $trail->push("Edit", route('users.edit', $user));
 });
 
 Breadcrumbs::for('roles.index', function (BreadcrumbTrail $trail) {
@@ -60,7 +60,7 @@ Breadcrumbs::for('roles.create', function (BreadcrumbTrail $trail) {
 
 Breadcrumbs::for('roles.edit', function (BreadcrumbTrail $trail, Role $role) {
     $trail->parent('roles.index');
-    $trail->push("Edit {$role->pretty_name}", route('roles.edit', $role));
+    $trail->push("Edit", route('roles.edit', $role));
 });
 
 Breadcrumbs::for('announcements.index', function (BreadcrumbTrail $trail) {
@@ -79,5 +79,5 @@ Breadcrumbs::for('announcements.show', function (BreadcrumbTrail $trail, Announc
 
 Breadcrumbs::for('announcements.edit', function (BreadcrumbTrail $trail, Announcement $announcement) {
     $trail->parent('announcements.show', $announcement);
-    $trail->push("Edit {$announcement->title}", route('announcements.edit', $announcement));
+    $trail->push("Edit", route('announcements.edit', $announcement));
 });
