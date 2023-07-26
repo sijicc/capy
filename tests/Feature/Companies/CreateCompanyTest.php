@@ -33,7 +33,7 @@ it('allows user to create company with correct data', function () {
         ->call('submit')
         ->assertRedirect(route('companies.index'));
 
-    $this->assertDatabaseHas('companies', array_filter($company, fn($key) => in_array($key, ['name', 'nip', 'regon']), ARRAY_FILTER_USE_KEY));
+    $this->assertDatabaseHas('companies', array_filter($company, fn ($key) => in_array($key, ['name', 'nip', 'regon']), ARRAY_FILTER_USE_KEY));
 });
 
 it('doesn\'t allow user to create company with incorrect data', function () {
@@ -50,5 +50,5 @@ it('doesn\'t allow user to create company with incorrect data', function () {
         ->call('submit')
         ->assertHasErrors(['nip', 'regon']);
 
-    $this->assertDatabaseMissing('companies', array_filter($company, fn($key) => in_array($key, ['name', 'nip', 'regon']), ARRAY_FILTER_USE_KEY));
+    $this->assertDatabaseMissing('companies', array_filter($company, fn ($key) => in_array($key, ['name', 'nip', 'regon']), ARRAY_FILTER_USE_KEY));
 });

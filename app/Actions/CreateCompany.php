@@ -11,8 +11,7 @@ readonly class CreateCompany
 {
     public function __construct(
         public CreateAddress $createAddress = new CreateAddress(),
-    )
-    {
+    ) {
     }
 
     public function handle(array $company): Company

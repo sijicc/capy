@@ -23,14 +23,14 @@ class Create extends Component
             'country_id' => null,
             'administrative_area' => null,
             'city' => null,
-            'postal_code' => null,
+            'zip' => null,
             'street' => null,
         ],
         'correspondence_address' => [
             'country_id' => null,
             'administrative_area' => null,
             'city' => null,
-            'postal_code' => null,
+            'zip' => null,
             'street' => null,
         ],
     ];

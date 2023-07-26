@@ -1,6 +1,6 @@
 <?php
 
-use App\Livewire\Companies\Edit;
+use App\Livewire\Companies\EditCompany;
 use App\Models\Company;
 use App\Models\User;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
@@ -14,6 +14,7 @@ beforeEach(function () {
     $this->seed();
 });
 
+// TODO: It belongs to CompanyControllerTest
 it('doesn\'t allow guest to edit company', function () {
     get(route('companies.edit', Company::factory()->create()))
         ->assertRedirect(route('login'));
@@ -30,11 +31,11 @@ it('allows user to edit company with correct data', function () {
         'regon' => '630303023',
     ];
 
-    livewire(Edit::class, ['company' => $company->getAttributes()])
+    livewire(EditCompany::class, ['company' => $company->getAttributes()])
         ->set('company.name', $changes['name'])
         ->set('company.nip', $changes['nip'])
         ->set('company.regon', $changes['regon'])
-        ->call('update')
+        ->call('submit')
         ->assertRedirect(route('companies.show', $company));
 
     $this->assertDatabaseHas('companies', $changes);
@@ -52,11 +53,11 @@ it('doesn\'t allow user to edit company with incorrect data', function () {
         'regon' => '123456789',
     ];
 
-    livewire(Edit::class, ['company' => $company->getAttributes()])
+    livewire(EditCompany::class, ['company' => $company->getAttributes()])
         ->set('company.name', $changes['name'])
         ->set('company.nip', $changes['nip'])
         ->set('company.regon', $changes['regon'])
-        ->call('update')
+        ->call('submit')
         ->assertHasErrors(['nip', 'regon']);
 
     $this->assertDatabaseHas('companies', $company->getAttributes());

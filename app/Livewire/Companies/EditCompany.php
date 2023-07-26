@@ -2,7 +2,10 @@
 
 namespace App\Livewire\Companies;
 
+use App\Models\Address;
+use App\Models\Company;
 use App\Models\Country;
+use Crypt;
 use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -14,7 +17,7 @@ use Illuminate\Http\RedirectResponse;
 use Livewire\Component;
 use Livewire\Features\SupportRedirects\Redirector;
 
-class CreateCompany extends Component implements HasForms
+class EditCompany extends Component implements HasForms
 {
     use InteractsWithForms;
 
@@ -22,7 +25,10 @@ class CreateCompany extends Component implements HasForms
 
     public function mount(): void
     {
-        $this->form->fill();
+        $this->company['address'] = Address::firstWhere('id', $this->company['address_id'])->getAttributes();
+        $this->company['correspondence_address'] = Address::firstWhere('id', $this->company['correspondence_address_id'])->getAttributes();
+        $this->company['id'] = Crypt::encryptString($this->company['id']);
+        $this->form->fill($this->company);
     }
 
     public function form(Form $form): Form
@@ -62,15 +68,18 @@ class CreateCompany extends Component implements HasForms
             ->statePath('company');
     }
 
-    public function submit(\App\Actions\CreateCompany $createCompany): RedirectResponse|Redirector
+    public function submit(\App\Actions\EditCompany $editCompany): RedirectResponse|Redirector
     {
-        $createCompany->handle($this->company);
+        $company = $editCompany->handle(
+            company: Company::firstWhere('id', Crypt::decryptString($this->company['id'])),
+            changes: $this->company
+        );
 
-        return redirect()->route('companies.index');
+        return redirect()->route('companies.show', $company);
     }
 
     public function render(): View
     {
-        return view('livewire.companies.create-company');
+        return view('livewire.companies.edit-company');
     }
 }

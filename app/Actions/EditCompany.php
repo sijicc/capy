@@ -20,7 +20,7 @@ readonly class EditCompany
 
         $company->update($validated);
         $this->editAddress->handle($company->address, $changes['address']);
-        $this->editAddress->handle($company->correspondenceAddress, $changes['correspondenceAddress']);
+        $this->editAddress->handle($company->correspondenceAddress, $changes['correspondence_address']);
 
         return $company;
     }

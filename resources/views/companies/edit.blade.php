@@ -1,3 +1,3 @@
 <x-auth-layout>
-    <livewire:companies.edit :company="$company->getAttributes()" />
+    <livewire:companies.edit-company :company="$company->getAttributes()" />
 </x-auth-layout>
