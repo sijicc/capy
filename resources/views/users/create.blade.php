@@ -1,3 +1,3 @@
 <x-auth-layout>
-    <livewire:users.create />
+    <livewire:users.create-user />
 </x-auth-layout>

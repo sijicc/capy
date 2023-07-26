@@ -1,5 +1,5 @@
 <x-auth-layout>
-    <x-card class="h-screen">
+    <x-card class="min-h-screen">
         <x-slot name="header">
             <div class="flex justify-between">
                 <div>

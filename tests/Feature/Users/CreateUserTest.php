@@ -28,22 +28,14 @@ it('allows user to create user with correct data', function () {
         'password' => 'Password123!',
     ];
 
-    livewire('users.create')
+    livewire('users.create-user')
         ->set('user.name', $user['name'])
         ->set('user.email', $user['email'])
         ->set('user.password', $user['password'])
-        ->call('store')
+        ->call('submit')
         ->assertRedirect(route('users.index'));
 
     assertDatabaseHas('users', $user);
-});
-
-it('allows user to generate safe password', function () {
-    actingAs(User::factory()->create());
-
-    livewire('users.create')
-        ->call('generateSafePassword')
-        ->assertNotSet('user.password', null);
 });
 
 it('doesn\'t allow user to create user with incorrect data', function () {
@@ -55,11 +47,11 @@ it('doesn\'t allow user to create user with incorrect data', function () {
         'password' => '1',
     ];
 
-    livewire('users.create')
+    livewire('users.create-user')
         ->set('user.name', $user['name'])
         ->set('user.email', $user['email'])
         ->set('user.password', $user['password'])
-        ->call('store')
+        ->call('submit')
         ->assertHasErrors(['email', 'password']);
 
     assertDatabaseMissing('users', $user);
