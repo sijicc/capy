@@ -10,7 +10,7 @@
             {{ $header }}
         </div>
     @endif
-    <div class="p-6 border-t border-b">
+    <div class="p-6">
         {{ $slot }}
     </div>
     @if(isset($footer))

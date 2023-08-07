@@ -1,18 +1,15 @@
 <?php
 
 use App\Models\User;
-use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use function Pest\Laravel\actingAs;
+use function Pest\Laravel\assertDatabaseCount;
 use function Pest\Laravel\assertDatabaseHas;
 use function Pest\Laravel\assertDatabaseMissing;
 use function Pest\Laravel\get;
 use function Pest\Livewire\livewire;
 
-uses(LazilyRefreshDatabase::class);
-
-beforeEach(function () {
-    $this->seed();
-});
+uses(RefreshDatabase::class);
 
 it('doesn\'t allow guest to create user', function () {
     get(route('companies.create'))
@@ -52,7 +49,27 @@ it('doesn\'t allow user to create user with incorrect data', function () {
         ->set('user.email', $user['email'])
         ->set('user.password', $user['password'])
         ->call('submit')
-        ->assertHasErrors(['email', 'password']);
+        ->assertHasErrors(['user.email', 'user.password']);
 
     assertDatabaseMissing('users', $user);
+});
+
+it('doesn\'t allow user to create user with existing email', function () {
+    $user = User::factory()->create();
+    actingAs($user);
+
+    $user = [
+        'name' => 'John Doe',
+        'email' => $user->email,
+        'password' => 'Password123!',
+    ];
+
+    livewire('users.create-user')
+        ->set('user.name', $user['name'])
+        ->set('user.email', $user['email'])
+        ->set('user.password', $user['password'])
+        ->call('submit')
+        ->assertHasErrors(['user.email']);
+
+    assertDatabaseCount('users', 1);
 });

@@ -13,9 +13,9 @@ class CreateRole extends Component implements Forms\Contracts\HasForms
 {
     use Forms\Concerns\InteractsWithForms;
 
-    public $name;
+    public ?string $name = '';
 
-    public $description;
+    public ?string $description = '';
 
     public array $permissions = [];
 

@@ -78,8 +78,45 @@ it('doesn\'t allow user to edit user with incorrect data', function () {
         ->set('user.email', $changes['email'])
         ->set('user.password', 'invalidpassword')
         ->call('submit')
-        ->assertHasErrors(['email', 'password']);
+        ->assertHasErrors(['user.email', 'user.password']);
 
     $this->assertDatabaseMissing('users', $changes);
     $this->assertDatabaseHas('users', $user->getAttributes());
+});
+
+it('doesn\'t allow user to edit user email to existing email', function () {
+    actingAs(User::factory()->create());
+
+    $user = User::factory()->create();
+    $user2 = User::factory()->create();
+
+    $changes = [
+        'name' => 'John Doe',
+        'email' => $user2->email,
+    ];
+
+    livewire(EditUser::class, ['user' => $user->getAttributes()])
+        ->set('user.email', $changes['email'])
+        ->call('submit')
+        ->assertHasErrors(['user.email']);
+
+    $this->assertDatabaseMissing('users', $changes);
+});
+
+it('allows user to edit existing user, and save it using same email', function () {
+    actingAs(User::factory()->create());
+
+    $user = User::factory()->create();
+
+    $changes = [
+        'name' => 'John Doe',
+    ];
+
+    livewire(EditUser::class, ['user' => $user->getAttributes()])
+        ->set('user.name', $changes['name'])
+        ->call('submit')
+        ->assertRedirect(route('users.show', $user));
+
+    $this->assertDatabaseHas('users', $changes);
+    $this->assertDatabaseMissing('users', $user->getAttributes());
 });

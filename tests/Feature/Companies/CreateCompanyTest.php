@@ -1,6 +1,7 @@
 <?php
 
 use App\Livewire\Companies\CreateCompany;
+use App\Models\Company;
 use App\Models\User;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use function Pest\Laravel\actingAs;
@@ -48,7 +49,26 @@ it('doesn\'t allow user to create company with incorrect data', function () {
     livewire(CreateCompany::class)
         ->set('company', $company)
         ->call('submit')
-        ->assertHasErrors(['nip', 'regon']);
+        ->assertHasErrors(['company.nip', 'company.regon']);
 
     $this->assertDatabaseMissing('companies', array_filter($company, fn ($key) => in_array($key, ['name', 'nip', 'regon']), ARRAY_FILTER_USE_KEY));
+});
+
+it('doesn\'t allow user to create company with nip or regon of already existing company', function () {
+    actingAs(User::factory()->create());
+
+    $existingCompany = Company::factory()->create();
+
+    $company = [
+        'name' => 'Biedronka',
+        'nip' => $existingCompany->nip,
+        'regon' => $existingCompany->regon,
+    ];
+
+    livewire(CreateCompany::class)
+        ->set('company', $company)
+        ->call('submit')
+        ->assertHasErrors(['company.nip', 'company.regon']);
+
+    $this->assertDatabaseCount('companies', 1);
 });

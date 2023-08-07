@@ -10,6 +10,7 @@ use Filament\Forms\Form;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Validation\Rules\Password;
 use Livewire\Component;
 use Livewire\Features\SupportRedirects\Redirector;
 
@@ -21,12 +22,9 @@ class EditUser extends Component implements HasForms
 
     public function mount(): void
     {
-        $this->form->fill([
-            'id' => Crypt::encryptString($this->user['id']),
-            'name' => $this->user['name'],
-            'email' => $this->user['email'],
-            'password' => null,
-        ]);
+        $this->user['id'] = Crypt::encryptString($this->user['id']);
+        $this->user['password'] = null;
+        $this->form->fill($this->user);
     }
 
     public function form(Form $form): Form
@@ -34,20 +32,26 @@ class EditUser extends Component implements HasForms
         return $form
             ->schema([
                 TextInput::make('name')
-                    ->required(),
+                    ->required()->maxLength(255),
                 TextInput::make('email')
                     ->required()
-                    ->email(),
+                    ->email()
+                    ->maxLength(255)
+                    ->unique('users', 'email', User::firstWhere('id', Crypt::decryptString($this->user['id']))),
                 TextInput::make('password')
                     ->password()
                     ->autocomplete('new-password')
-                    ->helperText('Leave blank to keep the same password.'),
+                    ->helperText('Leave blank to keep the same password.')
+                    ->nullable()
+                    ->rule(Password::min(8)->letters()->mixedCase()->numbers()),
             ])
             ->statePath('user');
     }
 
     public function submit(\App\Actions\EditUser $editUser): RedirectResponse|Redirector
     {
+        $this->validate();
+
         $user = $editUser->handle(
             user: User::firstWhere('id', Crypt::decryptString($this->user['id'])),
             changes: $this->user

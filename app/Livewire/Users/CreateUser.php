@@ -11,6 +11,7 @@ use Filament\Forms\Set;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rules\Password;
 use Livewire\Component;
 use Livewire\Features\SupportRedirects\Redirector;
 
@@ -30,25 +31,28 @@ class CreateUser extends Component implements HasForms
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
-                    ->required(),
+                    ->required()->maxLength(255),
                 Forms\Components\TextInput::make('email')
                     ->email()
-                    ->required(),
+                    ->required()
+                    ->unique('users', 'email'),
                 Forms\Components\TextInput::make('password')
                     ->password()
                     ->required()
                     ->suffixAction(
                         Action::make('generate')
                             ->icon('heroicon-m-shield-exclamation')
-                            ->action(fn(Set $set) => $set('password', Str::password()))
+                            ->action(fn (Set $set) => $set('password', Str::password()))
                             ->tooltip(__('Generate a safe password')),
-                    ),
+                    )->rule(Password::min(8)->letters()->mixedCase()->numbers()),
             ])
             ->statePath('user');
     }
 
     public function submit(\App\Actions\CreateUser $createUser): RedirectResponse|Redirector
     {
+        $this->validate();
+
         $createUser->handle($this->user);
 
         return redirect()->route('users.index');

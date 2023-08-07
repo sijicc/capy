@@ -3,6 +3,8 @@
 namespace App\Livewire\Companies;
 
 use App\Models\Country;
+use App\Rules\NipRule;
+use App\Rules\RegonRule;
 use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -31,14 +33,23 @@ class CreateCompany extends Component implements HasForms
             ->schema([
                 Fieldset::make(__('Basic info'))->schema([
                     TextInput::make('name')
-                        ->required(),
+                        ->required()->maxLength(255),
                     TextInput::make('nip')
-                        ->required(),
+                        ->unique('companies', 'nip')
+                        ->rule(new NipRule())
+                        ->required()->maxLength(255),
                     TextInput::make('regon')
-                        ->required(),
-                    TextInput::make('krs'),
-                    TextInput::make('email'),
-                    TextInput::make('phone'),
+                        ->unique('companies', 'regon')
+                        ->rule(new RegonRule())
+                        ->required()->maxLength(255),
+                    TextInput::make('krs')->maxLength(10),
+                    TextInput::make('email')
+                        ->label(__('Main contact e-mail'))
+                        ->email()->maxLength(255),
+                    TextInput::make('phone')
+                        ->label(__('Main contact phone number'))->maxLength(255),
+                    TextInput::make('website')
+                        ->url()->maxLength(255),
                 ]),
                 Fieldset::make(__('Address'))->schema([
                     Select::make('address.country_id')
@@ -64,6 +75,8 @@ class CreateCompany extends Component implements HasForms
 
     public function submit(\App\Actions\CreateCompany $createCompany): RedirectResponse|Redirector
     {
+        $this->validate();
+
         $createCompany->handle($this->company);
 
         return redirect()->route('companies.index');

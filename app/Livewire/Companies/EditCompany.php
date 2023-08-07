@@ -5,6 +5,8 @@ namespace App\Livewire\Companies;
 use App\Models\Address;
 use App\Models\Company;
 use App\Models\Country;
+use App\Rules\NipRule;
+use App\Rules\RegonRule;
 use Crypt;
 use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\Select;
@@ -37,14 +39,23 @@ class EditCompany extends Component implements HasForms
             ->schema([
                 Fieldset::make(__('Basic info'))->schema([
                     TextInput::make('name')
-                        ->required(),
+                        ->required()->maxLength(255),
                     TextInput::make('nip')
-                        ->required(),
+                        ->unique('companies', 'nip', Company::firstWhere('id', Crypt::decryptString($this->company['id'])))
+                        ->rule(new NipRule())
+                        ->required()->maxLength(255),
                     TextInput::make('regon')
-                        ->required(),
-                    TextInput::make('krs'),
-                    TextInput::make('email'),
-                    TextInput::make('phone'),
+                        ->unique('companies', 'regon', Company::firstWhere('id', Crypt::decryptString($this->company['id'])))
+                        ->rule(new RegonRule())
+                        ->required()->maxLength(255),
+                    TextInput::make('krs')->maxLength(10),
+                    TextInput::make('email')
+                        ->label(__('Main contact e-mail'))
+                        ->email()->maxLength(255),
+                    TextInput::make('phone')
+                        ->label(__('Main contact phone number'))->maxLength(255),
+                    TextInput::make('website')
+                        ->url()->maxLength(255),
                 ]),
                 Fieldset::make(__('Address'))->schema([
                     Select::make('address.country_id')
@@ -70,6 +81,8 @@ class EditCompany extends Component implements HasForms
 
     public function submit(\App\Actions\EditCompany $editCompany): RedirectResponse|Redirector
     {
+        $this->validate();
+
         $company = $editCompany->handle(
             company: Company::firstWhere('id', Crypt::decryptString($this->company['id'])),
             changes: $this->company

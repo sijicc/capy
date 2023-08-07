@@ -58,8 +58,53 @@ it('doesn\'t allow user to edit company with incorrect data', function () {
         ->set('company.nip', $changes['nip'])
         ->set('company.regon', $changes['regon'])
         ->call('submit')
-        ->assertHasErrors(['nip', 'regon']);
+        ->assertHasErrors(['company.nip', 'company.regon']);
 
     $this->assertDatabaseHas('companies', $company->getAttributes());
     $this->assertDatabaseMissing('companies', $changes);
+});
+
+it('doesn\'t allow user to edit company with same nip and regon as existing company', function () {
+    actingAs(User::factory()->create());
+
+    $company = Company::factory()->create();
+    $company2 = Company::factory()->create();
+
+    $changes = [
+        'name' => 'Biedronka',
+        'nip' => $company->nip,
+        'regon' => $company->regon,
+    ];
+
+    livewire(EditCompany::class, ['company' => $company2->getAttributes()])
+        ->set('company.name', $changes['name'])
+        ->set('company.nip', $changes['nip'])
+        ->set('company.regon', $changes['regon'])
+        ->call('submit')
+        ->assertHasErrors(['company.nip', 'company.regon']);
+
+    $this->assertDatabaseHas('companies', $company->getAttributes());
+    $this->assertDatabaseMissing('companies', $changes);
+});
+
+it('allows user to edit existing company, and save it using same nip and regon', function () {
+    actingAs(User::factory()->create());
+
+    $company = Company::factory()->create();
+
+    $changes = [
+        'name' => 'Biedronka',
+        'nip' => $company->nip,
+        'regon' => $company->regon,
+    ];
+
+    livewire(EditCompany::class, ['company' => $company->getAttributes()])
+        ->set('company.name', $changes['name'])
+        ->set('company.nip', $changes['nip'])
+        ->set('company.regon', $changes['regon'])
+        ->call('submit')
+        ->assertRedirect(route('companies.show', $company));
+
+    $this->assertDatabaseHas('companies', $changes);
+    $this->assertDatabaseMissing('companies', $company->getAttributes());
 });
